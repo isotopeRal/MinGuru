@@ -1,0 +1,723 @@
+<title>Mineralbestimmung nach Tennyson</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Laborbuch – links das Bestimmungs-Pult mit den Filtern in der Reihenfolge des Schlüssels (Glanz → Strich → Härte → Spaltbarkeit), rechts die Trefferliste; auf dem Handy klappt das Pult über die Liste */
+:root {
+  --bg: #f3f5f4;          /* Porzellan der Strichtafel, leicht grünstichig */
+  --panel: #ffffff;
+  --ink: #1c2427;
+  --muted: #5d6a6f;
+  --line: #d9dfdd;
+  --accent: #2c55a3;      /* Azurit */
+  --accent-soft: #e4ebf7;
+  --hit: #b8862b;         /* Pyrit-Messing für Hervorhebung */
+  --row-hover: #eef2f1;
+  --f-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --s-1: 12px; --s0: 14px; --s1: 16px; --s2: 20px; --s3: 28px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a1c; --panel: #1b2326; --ink: #e3e9e8; --muted: #95a3a7; --line: #2d393d;
+    --accent: #86a8ec; --accent-soft: #23314a; --hit: #d9ad55; --row-hover: #212b2e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a1c; --panel: #1b2326; --ink: #e3e9e8; --muted: #95a3a7; --line: #2d393d;
+  --accent: #86a8ec; --accent-soft: #23314a; --hit: #d9ad55; --row-hover: #212b2e; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: var(--s0); line-height: 1.45; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; margin-bottom: 18px; }
+h1 { font-family: var(--f-display); font-weight: 650; font-size: var(--s3); line-height: 1.15; margin: 0; text-wrap: balance; }
+.src { color: var(--muted); font-size: var(--s-1); max-width: 62ch; margin: 4px 0 0; }
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* Filter-Pult */
+.pult { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow: auto; }
+@media (max-width: 900px) { .pult { position: static; max-height: none; } }
+.pult > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+.pult > summary::-webkit-details-marker { display: none; }
+.pult > summary .chev { transition: transform .15s; color: var(--muted); }
+.pult[open] > summary .chev { transform: rotate(180deg); }
+.pult-body { padding: 0 14px 14px; display: grid; gap: 16px; }
+.step { display: grid; gap: 7px; }
+.step-h { display: flex; align-items: baseline; gap: 8px; font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.step-h b { font-family: var(--f-mono); font-weight: 500; color: var(--accent); letter-spacing: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; font-size: 13px; padding: 4px 9px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.chip:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(0,0,0,.25); flex: none; }
+input[type="search"], input[type="number"], select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; width: 100%; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pair label { display: grid; gap: 2px; font-size: var(--s-1); color: var(--muted); }
+.mohs { position: relative; height: 34px; margin-top: 2px; }
+.mohs-track { position: absolute; left: 0; right: 0; top: 8px; height: 6px; background: var(--line); border-radius: 3px; }
+.mohs-sel { position: absolute; top: 8px; height: 6px; background: var(--accent); border-radius: 3px; }
+.mohs-ticks { position: absolute; left: 0; right: 0; top: 18px; display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 10px; color: var(--muted); }
+.mohs input[type="range"] { position: absolute; left: -2px; right: -2px; width: calc(100% + 4px); top: 0; height: 22px; margin: 0; background: none; pointer-events: none; -webkit-appearance: none; appearance: none; }
+.mohs input[type="range"]::-webkit-slider-thumb { pointer-events: auto; -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent); cursor: pointer; }
+.mohs input[type="range"]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent); cursor: pointer; }
+.mohs input[type="range"]::-moz-range-track { background: none; }
+.hint { font-size: var(--s-1); color: var(--muted); margin: 0; }
+.check { display: flex; gap: 7px; align-items: flex-start; font-size: 13px; color: var(--muted); }
+.check input { margin-top: 3px; accent-color: var(--accent); }
+.reset { justify-self: start; font: inherit; font-size: 13px; color: var(--accent); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Ergebnisse */
+.res { min-width: 0; }
+.res-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 10px; }
+.count { font-size: var(--s1); }
+.count b { font-family: var(--f-mono); font-weight: 500; }
+.sortbox { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.sortbox select { width: auto; }
+.list { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; container: list / inline-size; }
+.cols { display: grid; grid-template-columns: minmax(130px,1.25fr) minmax(120px,1.35fr) 92px 58px minmax(110px,1.1fr) minmax(100px,1fr) 78px minmax(110px,1.1fr) 64px; gap: 12px; align-items: baseline; }
+.head { padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.head button { all: unset; cursor: pointer; }
+.head button:hover { color: var(--accent); }
+.head button[data-active="true"] { color: var(--accent); }
+.row { padding: 9px 14px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--row-hover); }
+.row > * { min-width: 0; overflow-wrap: break-word; hyphens: auto; }
+.nm { font-family: var(--f-display); font-weight: 650; font-size: 15.5px; line-height: 1.2; }
+.nm-link { color: inherit; text-decoration: none; }
+.nm-link:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.nm-link .ext { font-family: var(--f-body); font-size: 11px; color: var(--accent); margin-left: 4px; vertical-align: 2px; }
+.detail a { color: var(--accent); }
+.syn { display: block; font-family: var(--f-body); font-weight: 400; font-size: var(--s-1); color: var(--muted); margin-top: 1px; }
+.fo { font-family: var(--f-mono); font-size: 13px; }
+.fo-in { display: none; font-family: var(--f-mono); font-weight: 400; font-size: 12.5px; margin-top: 3px; overflow-wrap: anywhere; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: 13px; }
+.hbar { display: block; position: relative; height: 4px; background: var(--line); border-radius: 2px; margin-top: 4px; width: 80px; }
+.hbar i { position: absolute; top: 0; bottom: 0; background: var(--hit); border-radius: 2px; min-width: 4px; }
+.tab { font-family: var(--f-mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+.lbl { display: none; }
+.detail { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 24px; padding: 10px 0 4px; border-top: 1px dashed var(--line); margin-top: 6px; cursor: default; }
+.detail dt { font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.detail dd { margin: 2px 0 0; max-width: 65ch; }
+.detail .anm { grid-column: 1 / -1; font-size: 13px; color: var(--hit); }
+.jump { font: inherit; color: var(--accent); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; margin-right: 8px; }
+.empty { padding: 32px 16px; text-align: center; color: var(--muted); }
+@container list (max-width: 1040px) and (min-width: 761px) {
+  .cols { grid-template-columns: minmax(120px,1.3fr) 84px 52px minmax(100px,1fr) minmax(90px,1fr) 72px minmax(100px,1.1fr) 60px; }
+  .row .fo, .head .hfo { display: none; }
+  .row .fo-in { display: block; }
+}
+@container list (max-width: 760px) {
+  .head { display: none; }
+  .cols { grid-template-columns: 1fr auto; gap: 3px 12px; }
+  .row .nm { grid-column: 1; }
+  .row .tab { grid-column: 2; grid-row: 1; text-align: right; }
+  .row .tab .syn { display: inline; margin-left: 6px; }
+  .row .fo { grid-column: 1 / -1; }
+  .row .cell { grid-column: 1 / -1; display: flex; gap: 8px; }
+  .row .cell.h { grid-column: 1; }
+  .row .cell.d { grid-column: 2; grid-row: 3; justify-content: flex-end; }
+  .lbl { display: inline; color: var(--muted); font-size: var(--s-1); text-transform: uppercase; letter-spacing: .05em; min-width: 52px; padding-top: 1px; }
+  .cell.d .lbl { min-width: 0; }
+  .hbar { display: none; }
+}
+
+/* Anhang */
+.extra { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.extra section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+h2 { font-family: var(--f-display); font-weight: 650; font-size: var(--s2); margin: 0 0 8px; }
+.tw { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.abk { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; font-size: 13px; }
+.abk dt { font-family: var(--f-mono); }
+.abk dd { margin: 0; color: var(--muted); }
+
+/* Ansichten */
+.views { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.views button { font: inherit; font-weight: 600; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 8px 4px; margin-right: 18px; margin-bottom: -1px; cursor: pointer; }
+.views button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.views button:hover { color: var(--accent); }
+
+/* Geführter Schlüssel */
+.key { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .key { grid-template-columns: minmax(0, 1fr); } }
+.key-side { display: grid; gap: 14px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+@media (max-width: 900px) { .key-side { position: static; } }
+.path { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 28px; }
+.path .crumb { font: inherit; font-size: 13px; color: var(--ink); background: var(--accent-soft); border: 1px solid transparent; border-radius: 6px; padding: 3px 8px; cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline; }
+.path .crumb small { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.path .crumb:hover { border-color: var(--accent); }
+.path .crumb .x { color: var(--muted); }
+.path .sep { color: var(--muted); font-size: 12px; }
+.qcard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; }
+.qnum { font-family: var(--f-mono); font-size: var(--s-1); color: var(--accent); }
+.qcard h2 { margin: 0; }
+.qhelp { margin: 0; color: var(--muted); font-size: 13.5px; max-width: 60ch; }
+.opts { display: grid; gap: 8px; }
+.opt { font: inherit; text-align: left; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: 2px 10px; align-items: center; }
+.opt:hover { border-color: var(--accent); background: var(--accent-soft); }
+.opt .sw { width: 18px; height: 18px; grid-row: span 2; }
+.opt .ot { font-weight: 600; }
+.opt .od { grid-column: 2; font-size: 13px; color: var(--muted); }
+.opt .oc { grid-row: 1 / span 2; grid-column: 3; font-family: var(--f-mono); font-size: 13px; color: var(--muted); text-align: right; }
+.opt.nosw { grid-template-columns: 1fr auto; }
+.opt.nosw .od { grid-column: 1; }
+.opt.nosw .oc { grid-column: 2; }
+.opt.unsure { background: none; border-style: dashed; }
+.mohsref { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px; font-size: 10.5px; overflow-wrap: anywhere; hyphens: auto; text-align: center; color: var(--muted); }
+.mohsref span b { display: block; font-family: var(--f-mono); font-size: 12px; color: var(--ink); font-weight: 500; }
+.done h2 { font-size: var(--s1); }
+.nb { display: grid; gap: 6px; }
+.nb button { font: inherit; font-size: 13px; text-align: left; color: var(--accent); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.refine { display: grid; gap: 8px; }
+.restart { justify-self: start; }
+@media (max-width: 480px) { .mohsref { font-size: 8.5px; } }
+.ktitle { font-family: var(--f-display); font-weight: 650; font-size: var(--s1); margin: 0 0 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap" lang="de">
+  <header class="top">
+    <div>
+      <h1>Mineralbestimmung nach äußeren Kennzeichen</h1>
+      <p class="src">Alle 24 Tabellen aus Tennyson (1981), überarbeitet von Herting-Agthe &amp; Agthe (TU Berlin, 1998). Mineralien, die das Original in mehreren Tabellen führt, erscheinen auch hier mehrfach.</p>
+    </div>
+  </header>
+
+  <nav class="views" role="tablist" aria-label="Ansicht">
+    <button type="button" role="tab" id="tab-schluessel" aria-controls="view-schluessel">Geführt bestimmen</button>
+    <button type="button" role="tab" id="tab-tabelle" aria-controls="view-tabelle">Alle Tabellen</button>
+  </nav>
+
+  <section id="view-schluessel" role="tabpanel" aria-labelledby="tab-schluessel">
+    <div class="key">
+      <div class="key-side">
+        <div class="path" id="kpath"></div>
+        <div class="qcard" id="kq"></div>
+      </div>
+      <div class="res">
+        <div class="res-bar">
+          <div>
+            <p class="ktitle" id="ktitle"></p>
+            <div class="count" id="kcount"></div>
+          </div>
+        </div>
+        <div class="list" id="klist" role="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-tabelle" role="tabpanel" aria-labelledby="tab-tabelle" hidden>
+
+  <div class="layout">
+    <details class="pult" id="pult" open>
+      <summary><span>Bestimmen <span id="fcount" class="hint"></span></span><span class="chev" aria-hidden="true">▾</span></summary>
+      <div class="pult-body">
+        <div class="step">
+          <label class="step-h" for="q">Suche</label>
+          <input type="search" id="q" placeholder="Name, Formel, Vorkommen …" autocomplete="off">
+        </div>
+
+        <div class="step">
+          <div class="step-h"><b>1</b> Glanz</div>
+          <div class="seg" id="f-glanz"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><b>2</b> Strichfarbe</div>
+          <div class="seg" id="f-strich"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><b>3</b> Härte nach Mohs</div>
+          <div class="mohs" aria-label="Härtebereich">
+            <div class="mohs-track"></div>
+            <div class="mohs-sel" id="mohs-sel"></div>
+            <input type="range" id="hmin" min="1" max="10" step="0.5" value="1" aria-label="Härte von">
+            <input type="range" id="hmax" min="1" max="10" step="0.5" value="10" aria-label="Härte bis">
+            <div class="mohs-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+          </div>
+          <p class="hint" id="hlabel"></p>
+          <div class="seg" id="f-ritz"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><b>4</b> Spaltbarkeit</div>
+          <div class="seg" id="f-spalt"></div>
+          <label class="check"><input type="checkbox" id="spalt-incl" checked> Tabellen ohne diese Unterscheidung (A 2, B 2, B 3) einbeziehen</label>
+        </div>
+
+        <div class="step">
+          <div class="step-h">Dichte in g/cm³</div>
+          <div class="pair">
+            <label for="dmin">von<input type="number" id="dmin" min="1" max="20" step="0.1" placeholder="1,6"></label>
+            <label for="dmax">bis<input type="number" id="dmax" min="1" max="20" step="0.1" placeholder="19,3"></label>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-h">Glanzart</div>
+          <div class="seg" id="f-gart"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-h">Kristallsystem</div>
+          <div class="seg" id="f-sys"></div>
+        </div>
+
+        <div class="step">
+          <label class="step-h" for="ftab">Tabelle</label>
+          <select id="ftab"></select>
+        </div>
+
+        <label class="check"><input type="checkbox" id="dedupe"> Jedes Mineral nur einmal zeigen</label>
+        <button class="reset" id="reset" type="button">Alle Filter zurücksetzen</button>
+      </div>
+    </details>
+
+    <main class="res">
+      <div class="res-bar">
+        <div class="count" id="count"></div>
+        <label class="sortbox" for="sort">Sortieren
+          <select id="sort">
+            <option value="orig">wie im Original</option>
+            <option value="name">Name</option>
+            <option value="h">Härte</option>
+            <option value="d">Dichte</option>
+          </select>
+        </label>
+      </div>
+      <div class="list" id="list" role="list"></div>
+
+    </main>
+  </div>
+  </section>
+
+      <div class="extra">
+    <section>
+      <h2>Farbvarietäten von Edelsteinqualität</h2>
+      <div class="tw"><table id="gems"><thead><tr><th>Mineral</th><th>Farbe</th><th>Edelstein</th></tr></thead><tbody></tbody></table></div>
+      <h2 style="margin-top:16px">Lichteffekte</h2>
+      <div class="tw"><table id="fx"><tbody></tbody></table></div>
+    </section>
+    <section>
+      <h2>Abkürzungen</h2>
+      <dl class="abk">
+        <dt>Dgl</dt><dd>Diamantglanz (z. B. helle Zinkblende)</dd>
+        <dt>Glgl</dt><dd>Glasglanz (z. B. Quarz auf gewachsenen Flächen)</dd>
+        <dt>Fgl</dt><dd>Fettglanz (z. B. Quarz auf Bruchflächen)</dd>
+        <dt>Hgl</dt><dd>Harzglanz (z. B. Schwefel)</dd>
+        <dt>Mgl</dt><dd>Metallglanz (z. B. Pyrit)</dd>
+        <dt>Pmgl</dt><dd>Perlmuttglanz (z. B. Gips auf Spaltflächen)</dd>
+        <dt>Sgl</dt><dd>Seidenglanz (feinfaserige Aggregate)</dd>
+        <dt>Sp.</dt><dd>Spaltbarkeit, Spaltfläche</dd>
+        <dt>Agg.</dt><dd>Aggregat(e)</dd>
+        <dt>angel.</dt><dd>angelaufen</dd>
+        <dt>x / xx</dt><dd>idiomorpher Einkristall / idiomorphe Kristalle</dd>
+        <dt>ps.</dt><dd>pseudo</dd>
+        <dt>vollk.</dt><dd>vollkommen</dd>
+        <dt>∢</dt><dd>Winkel zwischen den Spaltflächen</dd>
+      </dl>
+      <p class="hint" style="margin-top:12px">Gelbe Hinweise in der Detailansicht markieren Stellen, an denen das Original einen Druckfehler enthält oder nur Wiederholungszeichen setzt.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+const DATA = __DATA__;
+const rows = DATA.rows.map((r, i) => Object.assign(r, { i }));
+
+const STRICH = [
+  { k: "A1", t: "weiß, grau, schwarz", sw: "linear-gradient(90deg,#fff,#888,#111)" },
+  { k: "B1", t: "farblos, weiß, sehr blass", sw: "#fbfbf8" },
+  { k: "A2", t: "gelb, rot, braun (metallisch)", sw: "linear-gradient(90deg,#d9b13b,#a8322a,#6b4423)" },
+  { k: "B2", t: "gelb, rot, braun (nichtmetallisch)", sw: "linear-gradient(90deg,#d9b13b,#a8322a,#6b4423)" },
+  { k: "B3", t: "grün, blau", sw: "linear-gradient(90deg,#3d8f5a,#2c55a3)" },
+];
+const GART = ["Mgl", "Dgl", "Glgl", "Fgl", "Hgl", "Pmgl", "Sgl", "matt"];
+const SYS = ["kubisch", "tetragonal", "hexagonal", "trigonal", "orthorhombisch", "monoklin", "triklin", "amorph"];
+const RITZ = [
+  { t: "Fingernagel ritzt (≤ 2½)", a: 1, b: 2.5 },
+  { t: "Kupfermünze ritzt (≤ 3½)", a: 1, b: 3.5 },
+  { t: "Messer ritzt (≤ 5½)", a: 1, b: 5.5 },
+  { t: "ritzt Glas (≥ 5½)", a: 5.5, b: 10 },
+];
+
+rows.forEach(r => {
+  const g = new Set((r.glanz.match(/\b(Dgl|Glgl|Fgl|Hgl|Mgl|Pmgl|Sgl)\b/g) || []));
+  if (r.glanzgr === "A") g.add("Mgl");
+  if (r.glanz === "metallisch / halbmetallisch") r.glanz = "metallisch";
+  if (/matt/.test(r.glanz)) g.add("matt");
+  r.gart = [...g];
+  r.hay = [r.name, r.syn, r.formel, r.farbe, r.strich, r.bem, r.vork, r.ausb, r.tab].join(" ").toLowerCase();
+});
+
+const st = { q: "", glanz: "", strich: new Set(), hmin: 1, hmax: 10, spalt: "", spaltIncl: true, dmin: null, dmax: null, gart: new Set(), sys: new Set(), tab: "", dedupe: false, sort: "orig", open: new Set() };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = n => String(n).replace(".5", "½").replace(/^0½/, "½");
+
+function chip(label, pressed, onClick, sw) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", pressed ? "true" : "false");
+  b.innerHTML = (sw ? `<span class="sw" style="background:${sw}"></span>` : "") + esc(label);
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function renderFilters() {
+  const fg = $("f-glanz"); fg.replaceChildren(
+    ...[["", "alle"], ["A", "metallisch, halbmetallisch"], ["B", "nichtmetallisch"]].map(([k, t]) =>
+      chip(t, st.glanz === k, () => { st.glanz = k; if (k) [...st.strich].forEach(s => { if (s[0] !== k) st.strich.delete(s); }); update(); }))
+  );
+  $("f-strich").replaceChildren(...STRICH.filter(s => !st.glanz || s.k[0] === st.glanz).map(s =>
+    chip(s.t, st.strich.has(s.k), () => { st.strich.has(s.k) ? st.strich.delete(s.k) : st.strich.add(s.k); update(); }, s.sw)));
+  $("f-ritz").replaceChildren(...RITZ.map(x =>
+    chip(x.t, st.hmin === x.a && st.hmax === x.b, () => {
+      const on = st.hmin === x.a && st.hmax === x.b;
+      st.hmin = on ? 1 : x.a; st.hmax = on ? 10 : x.b; $("hmin").value = st.hmin; $("hmax").value = st.hmax; update();
+    })));
+  $("f-spalt").replaceChildren(...[["", "alle"], ["deutlich", "deutlich erkennbar"], ["keine", "keine deutliche"]].map(([k, t]) =>
+    chip(t, st.spalt === k, () => { st.spalt = k; update(); })));
+  $("f-gart").replaceChildren(...GART.map(k =>
+    chip(k, st.gart.has(k), () => { st.gart.has(k) ? st.gart.delete(k) : st.gart.add(k); update(); })));
+  $("f-sys").replaceChildren(...SYS.map(k =>
+    chip(k, st.sys.has(k), () => { st.sys.has(k) ? st.sys.delete(k) : st.sys.add(k); update(); })));
+  const left = (st.hmin - 1) / 9 * 100, right = (st.hmax - 1) / 9 * 100;
+  $("mohs-sel").style.left = left + "%"; $("mohs-sel").style.width = (right - left) + "%";
+  $("hlabel").textContent = (st.hmin === 1 && st.hmax === 10) ? "alle Härten" : `Härte ${fmt(st.hmin)} bis ${fmt(st.hmax)} (Überschneidung mit dem Tabellenwert)`;
+}
+
+function active() {
+  let n = 0;
+  if (st.q) n++; if (st.glanz) n++; if (st.strich.size) n++; if (st.hmin > 1 || st.hmax < 10) n++;
+  if (st.spalt) n++; if (st.dmin != null || st.dmax != null) n++; if (st.gart.size) n++; if (st.sys.size) n++; if (st.tab) n++;
+  return n;
+}
+
+function filtered() {
+  const q = st.q.trim().toLowerCase();
+  let out = rows.filter(r => {
+    if (q && !q.split(/\s+/).every(w => r.hay.includes(w))) return false;
+    if (st.glanz && r.glanzgr !== st.glanz) return false;
+    if (st.strich.size && !st.strich.has(r.strichgr)) return false;
+    if ((st.hmin > 1 || st.hmax < 10) && (r.hmax < st.hmin || r.hmin > st.hmax)) return false;
+    if (st.spalt) { if (r.spaltgr ? r.spaltgr !== st.spalt : !st.spaltIncl) return false; }
+    if (st.dmin != null && (r.dmax == null || r.dmax < st.dmin)) return false;
+    if (st.dmax != null && (r.dmin == null || r.dmin > st.dmax)) return false;
+    if (st.gart.size && !r.gart.some(g => st.gart.has(g))) return false;
+    if (st.sys.size && !r.sys.some(s => st.sys.has(s))) return false;
+    if (st.tab && r.tab !== st.tab) return false;
+    return true;
+  });
+  if (st.dedupe) { const seen = new Set(); out = out.filter(r => !seen.has(r.name) && seen.add(r.name)); }
+  const cmp = {
+    orig: (a, b) => a.i - b.i,
+    name: (a, b) => a.name.localeCompare(b.name, "de") || a.i - b.i,
+    h: (a, b) => (a.hmin - b.hmin) || (a.hmax - b.hmax) || a.name.localeCompare(b.name, "de"),
+    d: (a, b) => ((a.dmin ?? 99) - (b.dmin ?? 99)) || a.name.localeCompare(b.name, "de"),
+  }[st.sort];
+  return out.sort(cmp);
+}
+
+function rowHTML(r) {
+  const l = (r.hmin - 1) / 9 * 100, w = Math.max((r.hmax - r.hmin) / 9 * 100, 0);
+  const open = st.open.has(r.i);
+  const auch = r.auch.length ? r.auch.map(t => `<button type="button" class="jump" data-tab="${esc(t)}">Tab. ${esc(t)}</button>`).join("") : "";
+  return `<div class="row cols" role="listitem" tabindex="0" data-i="${r.i}" aria-expanded="${open}">
+    <div class="nm"><a class="nm-link" href="${esc(r.mindat)}" target="_blank" rel="noopener" title="${esc(r.mindat_en)} auf mindat.org öffnen">${esc(r.name)}<span class="ext" aria-hidden="true">↗</span></a>${r.syn ? `<span class="syn">${esc(r.syn)}</span>` : ""}<span class="fo-in">${esc(r.formel)}</span></div>
+    <div class="fo">${esc(r.formel)}</div>
+    <div class="cell h"><span class="lbl">H</span><span class="num">${esc(r.H)}<span class="hbar" aria-hidden="true"><i style="left:${l}%;width:${w}%"></i></span></span></div>
+    <div class="cell d"><span class="lbl">D</span><span class="num">${esc(r.D)}</span></div>
+    <div class="cell"><span class="lbl">Farbe</span><span>${esc(r.farbe)}</span></div>
+    <div class="cell"><span class="lbl">Strich</span><span>${esc(r.strich)}</span></div>
+    <div class="cell"><span class="lbl">Glanz</span><span>${esc(r.glanz)}</span></div>
+    <div class="cell"><span class="lbl">Spaltb.</span><span>${esc(r.spalt)}</span></div>
+    <div class="tab" title="Seite ${r.seite}">${esc(r.tab.replace(" (Forts.)", ""))}<span class="syn">S. ${r.seite}</span></div>
+    ${open ? `<dl class="detail">
+      <div><dt>Kristallsystem, -klasse</dt><dd>${esc(r.system)}</dd></div>
+      <div><dt>Ausbildung, Kristallform</dt><dd>${esc(r.ausb)}</dd></div>
+      <div><dt>Bemerkungen</dt><dd>${esc(r.bem)}</dd></div>
+      <div><dt>Typisches Vorkommen</dt><dd>${esc(r.vork)}</dd></div>
+      <div><dt>Weitere Informationen</dt><dd><a href="${esc(r.mindat)}" target="_blank" rel="noopener">${esc(r.mindat_en)} auf mindat.org</a></dd></div>
+      ${auch ? `<div><dt>Auch aufgeführt in</dt><dd>${auch}</dd></div>` : ""}
+      ${r.anm ? `<div class="anm">Hinweis zur Transkription: ${esc(r.anm)}</div>` : ""}
+    </dl>` : ""}
+  </div>`;
+}
+
+function update() {
+  renderFilters();
+  const res = filtered();
+  const n = active();
+  $("fcount").textContent = n ? `· ${n} Filter aktiv` : "";
+  const uniq = new Set(res.map(r => r.name)).size;
+  $("count").innerHTML = `<b>${res.length}</b> ${res.length === 1 ? "Eintrag" : "Einträge"}${st.dedupe ? "" : `, <b>${uniq}</b> verschiedene Mineralien`}`;
+  const head = `<div class="head cols" aria-hidden="true">
+    <div><button type="button" data-sort="name" data-active="${st.sort === "name"}">Name</button></div><div class="hfo">Formel</div>
+    <div><button type="button" data-sort="h" data-active="${st.sort === "h"}">H</button></div>
+    <div><button type="button" data-sort="d" data-active="${st.sort === "d"}">D</button></div>
+    <div>Farbe</div><div>Strich</div><div>Glanz</div><div>Spaltb./Bruch</div>
+    <div><button type="button" data-sort="orig" data-active="${st.sort === "orig"}">Tab.</button></div></div>`;
+  $("list").innerHTML = head + (res.length ? res.map(rowHTML).join("") :
+    `<div class="empty">Kein Mineral passt zu allen gewählten Merkmalen. Lockere den Härtebereich oder entferne einen Filter.</div>`);
+  $("sort").value = st.sort;
+}
+
+function bindList(el) {
+  el.addEventListener("click", e => {
+    const s = e.target.closest("[data-sort]"); if (s) { st.sort = s.dataset.sort; rerender(); return; }
+    const j = e.target.closest(".jump");
+    if (j) { const name = rows[+j.closest(".row").dataset.i].name; reset(); st.q = name; $("q").value = name; setView("tabelle"); return; }
+    if (e.target.closest(".detail") || e.target.closest("a")) return;
+    const row = e.target.closest(".row"); if (!row) return;
+    const i = +row.dataset.i; st.open.has(i) ? st.open.delete(i) : st.open.add(i); rerender();
+  });
+  el.addEventListener("keydown", e => {
+    if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("row")) {
+      e.preventDefault(); const i = +e.target.dataset.i; st.open.has(i) ? st.open.delete(i) : st.open.add(i); rerender();
+      const f = el.querySelector(`.row[data-i="${i}"]`); f && f.focus();
+    }
+  });
+}
+bindList($("list")); bindList($("klist"));
+$("q").addEventListener("input", e => { st.q = e.target.value; update(); });
+["hmin", "hmax"].forEach(id => $(id).addEventListener("input", () => {
+  let a = +$("hmin").value, b = +$("hmax").value;
+  if (a > b) { if (id === "hmin") b = a; else a = b; $("hmin").value = a; $("hmax").value = b; }
+  st.hmin = a; st.hmax = b; update();
+}));
+const num = v => { const x = parseFloat(String(v).replace(",", ".")); return isNaN(x) ? null : x; };
+$("dmin").addEventListener("input", e => { st.dmin = num(e.target.value); update(); });
+$("dmax").addEventListener("input", e => { st.dmax = num(e.target.value); update(); });
+$("spalt-incl").addEventListener("change", e => { st.spaltIncl = e.target.checked; update(); });
+$("dedupe").addEventListener("change", e => { st.dedupe = e.target.checked; update(); });
+$("sort").addEventListener("change", e => { st.sort = e.target.value; update(); });
+const ftab = $("ftab");
+ftab.innerHTML = `<option value="">alle Tabellen</option>` + DATA.tables.map(t => `<option value="${esc(t.tab)}">${esc(t.tab)} – S. ${t.seite}</option>`).join("");
+ftab.addEventListener("change", e => { st.tab = e.target.value; update(); });
+function reset() {
+  Object.assign(st, { q: "", glanz: "", hmin: 1, hmax: 10, spalt: "", spaltIncl: true, dmin: null, dmax: null, tab: "" });
+  st.strich.clear(); st.gart.clear(); st.sys.clear();
+  $("q").value = ""; $("hmin").value = 1; $("hmax").value = 10; $("dmin").value = ""; $("dmax").value = "";
+  $("spalt-incl").checked = true; ftab.value = "";
+}
+$("reset").addEventListener("click", () => { reset(); update(); });
+
+$("gems").querySelector("tbody").innerHTML = DATA.gems.map(g => `<tr><td>${esc(g[0])}</td><td>${esc(g[1])}</td><td>${esc(g[2])}</td></tr>`).join("");
+$("fx").querySelector("tbody").innerHTML = DATA.effekte.map(g => `<tr><td>${esc(g[0])}</td><td>${esc(g[1])}</td></tr>`).join("");
+
+
+/* ---------- Geführter Bestimmungsschlüssel (S. 1–2 des Originals) ---------- */
+// Jedes Blatt des Schlüssels: Antworten auf die Fragen und die Tabelle(n), bei denen man landet
+const LEAVES = [
+  { g: "A", s: "A1", h: "≤ 4", sp: "deutlich", tabs: ["A 1.1 a"] },
+  { g: "A", s: "A1", h: "≤ 4", sp: "keine", tabs: ["A 1.1 b"] },
+  { g: "A", s: "A1", h: "≥ 4", sp: "deutlich", tabs: ["A 1.2 a"] },
+  { g: "A", s: "A1", h: "≥ 4", sp: "keine", tabs: ["A 1.2 b"] },
+  { g: "A", s: "A2", h: "≤ 4", tabs: ["A 2.1"] },
+  { g: "A", s: "A2", h: "≥ 4", tabs: ["A 2.2"] },
+  { g: "B", s: "B1", h: "< 3", sp: "deutlich", f: "tafelig", tabs: ["B 1.1 a"] },
+  { g: "B", s: "B1", h: "< 3", sp: "deutlich", f: "stengelig", tabs: ["B 1.1 a (Forts.)"] },
+  { g: "B", s: "B1", h: "< 3", sp: "keine", tabs: ["B 1.1 b"] },
+  { g: "B", s: "B1", h: "3–4", sp: "deutlich", tabs: ["B 1.2 a"] },
+  { g: "B", s: "B1", h: "3–4", sp: "keine", tabs: ["B 1.2 b"] },
+  { g: "B", s: "B1", h: "4–5", sp: "deutlich", tabs: ["B 1.3 a"] },
+  { g: "B", s: "B1", h: "4–5", sp: "keine", tabs: ["B 1.3 b"] },
+  { g: "B", s: "B1", h: "5–6", sp: "deutlich", tabs: ["B 1.4 a"] },
+  { g: "B", s: "B1", h: "5–6", sp: "keine", tabs: ["B 1.4 b"] },
+  { g: "B", s: "B1", h: "≥ 6", sp: "deutlich", tabs: ["B 1.5 a", "B 1.5 a (Forts.)"] },
+  { g: "B", s: "B1", h: "≥ 6", sp: "keine", tabs: ["B 1.5 b", "B 1.5 b (Forts.)"] },
+  { g: "B", s: "B2", h: "< 3", tabs: ["B 2.1"] },
+  { g: "B", s: "B2", h: "3–5", tabs: ["B 2.2"] },
+  { g: "B", s: "B2", h: "> 5", tabs: ["B 2.3"] },
+  { g: "B", s: "B3", h: "< 3", tabs: ["B 3.1"] },
+  { g: "B", s: "B3", h: "3–5", tabs: ["B 3.2"] },
+  { g: "B", s: "B3", h: "> 5", tabs: ["B 3.3"] },
+];
+const STEPS = [
+  { k: "g", t: "Wie glänzt das Mineral?", short: "Glanz",
+    help: "Eine frische Bruch- oder Kristallfläche im Licht drehen. Metallisch glänzende Mineralien sind undurchsichtig, auch an dünnen Kanten." },
+  { k: "s", t: "Welche Farbe hat der Strich?", short: "Strich",
+    help: "Kräftig über eine unglasierte Porzellantafel reiben und das Pulver ansehen. Der Strich ist verlässlicher als die Farbe des Stücks. Mineralien, die härter sind als die Tafel (ab etwa 6–7), hinterlassen keinen Strich und zählen als farblos." },
+  { k: "h", t: "Wie hart ist das Mineral?", short: "Härte",
+    help: "An einer unauffälligen Stelle ritzen und prüfen, ob eine echte Furche bleibt und nicht nur Abrieb des Werkzeugs. Bei einem Ergebnis nahe einer Grenze lieber „nicht sicher“ wählen.",
+    mohs: true },
+  { k: "sp", t: "Ist eine Spaltbarkeit zu erkennen?", short: "Spaltbarkeit",
+    help: "Spaltflächen sind eben und spiegeln alle gleichzeitig auf, oft treppenartig parallel wiederholt. Bruchflächen sind dagegen uneben, muschelig oder splittrig. In feinkörnigen Aggregaten ist Spaltbarkeit oft nicht zu sehen." },
+  { k: "f", t: "Wie sind die Kristalle ausgebildet?", short: "Kristallform",
+    help: "Das Original trennt die weichen, gut spaltbaren Mineralien zusätzlich nach der Tracht der Kristalle." },
+];
+const OPT = {
+  g: { A: ["metallisch oder halbmetallisch", "spiegelt wie Metall, undurchsichtig"],
+       B: ["nichtmetallisch", "Glas-, Fett-, Diamant-, Perlmutt-, Seidenglanz oder matt"] },
+  s: { A1: ["weiß, grau oder schwarz", ""], A2: ["gelb, rot oder braun", ""],
+       B1: ["farblos, weiß oder sehr blass", "kein deutlicher Farbton im Pulver"],
+       B2: ["gelb, rot, braun oder schwarz", ""], B3: ["grün oder blau", ""] },
+  h: { "≤ 4": ["H ≤ 4", "Kupferstück ritzt, oder das Messer ritzt mühelos"],
+       "≥ 4": ["H ≥ 4", "Kupferstück ritzt nicht mehr"],
+       "< 3": ["H < 3", "Fingernagel ritzt (bis etwa 2½)"],
+       "3–4": ["H 3–4", "Fingernagel ritzt nicht, Kupferstück ritzt"],
+       "4–5": ["H 4–5", "Kupferstück ritzt nicht, Messer ritzt leicht"],
+       "5–6": ["H 5–6", "Messer ritzt nur mit Mühe, Glas wird kaum geritzt"],
+       "≥ 6": ["H ≥ 6", "Messer ritzt nicht, das Mineral ritzt Glas"],
+       "3–5": ["H 3–5", "Fingernagel ritzt nicht, Messer ritzt"],
+       "> 5": ["H > 5", "Messer ritzt nicht oder kaum"] },
+  sp: { deutlich: ["deutlich erkennbar", "ebene, spiegelnde Spaltflächen"],
+        keine: ["keine deutliche Spaltbarkeit", "unebener, muscheliger oder splittriger Bruch"] },
+  f: { tafelig: ["tafelig oder blättrig", "z. B. Glimmer, Talk, Chlorit"],
+       stengelig: ["stengelig oder isometrisch", "z. B. Gips, Steinsalz, Kryolith"] },
+};
+const HORDER = { A1: ["≤ 4", "≥ 4"], A2: ["≤ 4", "≥ 4"], B1: ["< 3", "3–4", "4–5", "5–6", "≥ 6"], B2: ["< 3", "3–5", "> 5"], B3: ["< 3", "3–5", "> 5"] };
+const SW = Object.fromEntries(STRICH.map(s => [s.k, s.sw]));
+SW.B2 = "linear-gradient(90deg,#d9b13b,#a8322a,#6b4423,#222)";
+const MOHS = ["Talk", "Gips", "Calcit", "Fluorit", "Apatit", "Orthoklas", "Quarz", "Topas", "Korund", "Diamant"];
+const DCLS = [
+  { t: "leicht (< 2,5)", a: 0, b: 2.5 }, { t: "mittel (2,5–3,5)", a: 2.5, b: 3.5 },
+  { t: "schwer (3,5–5)", a: 3.5, b: 5 }, { t: "sehr schwer (> 5)", a: 5, b: 99 },
+];
+const ks = { ans: {}, d: null, q: "" };   // ans[k] = Wert oder "?" für „nicht sicher“
+
+const tabTitle = Object.fromEntries(DATA.tables.map(t => [t.tab, t]));
+const matches = (leaf, ans) => Object.entries(ans).every(([k, v]) => v === "?" || leaf[k] === undefined || leaf[k] === v);
+const leafRows = leaves => { const tabs = new Set(leaves.flatMap(l => l.tabs)); return rows.filter(r => tabs.has(r.tab)); };
+
+function currentStep(leaves) {
+  for (const s of STEPS) {
+    if (s.k in ks.ans) continue;
+    const vals = new Set(leaves.map(l => l[s.k]).filter(v => v !== undefined));
+    if (vals.size > 1) return { s, vals: [...vals] };
+  }
+  return null;
+}
+
+function answer(k, v) {
+  ks.ans[k] = v;
+  ks.d = null; ks.q = "";
+  renderKey();
+  if (window.matchMedia("(max-width: 900px)").matches) $("kq").scrollIntoView({ block: "nearest" });
+}
+function undoFrom(k) {
+  const idx = STEPS.findIndex(s => s.k === k);
+  STEPS.slice(idx).forEach(s => delete ks.ans[s.k]);
+  ks.d = null; ks.q = ""; renderKey();
+}
+
+function renderKey() {
+  const leaves = LEAVES.filter(l => matches(l, ks.ans));
+  const cur = currentStep(leaves);
+
+  // Pfad der bisherigen Antworten
+  const crumbs = STEPS.filter(s => s.k in ks.ans).map(s => {
+    const v = ks.ans[s.k];
+    const lab = v === "?" ? "nicht sicher" : OPT[s.k][v][0];
+    return `<button type="button" class="crumb" data-undo="${s.k}" title="Antwort ändern"><small>${s.short}</small>${esc(lab)}<span class="x" aria-hidden="true">×</span></button>`;
+  });
+  $("kpath").innerHTML = crumbs.length ? crumbs.join('<span class="sep" aria-hidden="true">›</span>') : `<span class="hint">Beantworte die Fragen der Reihe nach. Jede Antwort grenzt die Kandidaten rechts ein.</span>`;
+
+  // Frage oder Abschluss
+  if (cur) {
+    const n = STEPS.filter(s => s.k in ks.ans).length + 1;
+    const opts = cur.vals.map(v => {
+      const cnt = leafRows(leaves.filter(l => l[cur.s.k] === v || l[cur.s.k] === undefined)).length;
+      const [t, d] = OPT[cur.s.k][v];
+      const sw = cur.s.k === "s" ? SW[v] : null;
+      return `<button type="button" class="opt${sw ? "" : " nosw"}" data-k="${cur.s.k}" data-v="${esc(v)}">
+        ${sw ? `<span class="sw" style="background:${sw}"></span>` : ""}<span class="ot">${esc(t)}</span><span class="oc">${cnt}</span>${d ? `<span class="od">${esc(d)}</span>` : ""}</button>`;
+    }).join("");
+    $("kq").innerHTML = `<div class="qnum">Frage ${n}</div><h2>${cur.s.t}</h2><p class="qhelp">${cur.s.help}</p>
+      ${cur.s.mohs ? `<div class="mohsref" aria-label="Mohssche Härteskala">${MOHS.map((m, i) => `<span><b>${i + 1}</b>${m}</span>`).join("")}</div>` : ""}
+      <div class="opts">${opts}
+        <button type="button" class="opt nosw unsure" data-k="${cur.s.k}" data-v="?"><span class="ot">nicht sicher</span><span class="oc">${leafRows(leaves).length}</span><span class="od">beide Wege offen lassen</span></button>
+      </div>
+      <p class="hint">Die Zahlen nennen die Einträge, die nach dieser Antwort übrig bleiben.</p>`;
+  } else {
+    // Ziel erreicht: Nachbartabellen für Grenzfälle und weitere Eingrenzung
+    let nb = "";
+    if (leaves.length === 1) {
+      const me = leaves[0];
+      // Nachbarn: Blätter mit gleichem Glanz und Strich, die sich in genau einer beantworteten Eigenschaft unterscheiden
+      const seen = new Set();
+      nb = LEAVES.filter(l => l !== me && l.g === me.g && l.s === me.s).map(l => {
+        const diff = ["h", "sp", "f"].filter(k => l[k] !== undefined && me[k] !== undefined && l[k] !== me[k]);
+        if (diff.length !== 1) return "";
+        const k = diff[0], id = k + l[k];
+        if (k === "h") { const o = HORDER[me.s]; if (Math.abs(o.indexOf(l.h) - o.indexOf(me.h)) !== 1) return ""; }
+        if (seen.has(id)) return ""; seen.add(id);
+        const group = LEAVES.filter(x => x.g === me.g && x.s === me.s && x[k] === l[k] && ["h", "sp"].filter(q => q !== k && x[q] !== undefined && me[q] !== undefined && x[q] !== me[q]).length === 0);
+        const st0 = STEPS.find(s => s.k === k);
+        const tabs = [...new Set(group.map(x => x.tabs[0].replace(" (Forts.)", "")))].join(", ");
+        return `<button type="button" data-alt="${esc(JSON.stringify({ k, v: l[k] }))}">Falls ${st0.short} doch „${esc(OPT[k][l[k]][0])}“: Tab. ${esc(tabs)} (${leafRows(group).length})</button>`;
+      }).join("");
+    }
+    $("kq").innerHTML = `<div class="done"><div class="qnum">Am Ziel</div>
+      <h2>${leaves.length === 1 ? `Tabelle ${esc(leaves[0].tabs[0])}` : `${leaves.length} Tabellen kommen in Frage`}</h2></div>
+      <div class="refine">
+        <div class="step-h">Dichte schätzen</div>
+        <p class="qhelp">Ein Stück in der Hand wiegen und mit Quarz (2,65) vergleichen. Erze wie Bleiglanz (7,6) fallen sofort auf.</p>
+        <div class="seg" id="kdcls"></div>
+        <label class="step-h" for="kq-text" style="margin-top:6px">Farbe, Form oder Name</label>
+        <input type="search" id="kq-text" placeholder="z. B. grün, faserig, magnetisch" autocomplete="off" value="${esc(ks.q)}">
+      </div>
+      ${nb ? `<div class="nb"><div class="step-h">Grenzfall?</div>${nb}</div>` : ""}
+      <button type="button" class="reset restart" data-restart="1">Neu beginnen</button>`;
+    $("kdcls").replaceChildren(...DCLS.map((c, i) => chip(c.t, ks.d === i, () => { ks.d = ks.d === i ? null : i; renderKey(); })));
+    $("kq-text").addEventListener("input", e => { ks.q = e.target.value; renderList(); });
+  }
+
+  // Titel und Kandidaten
+  if (leaves.length === 1) {
+    const t = tabTitle[leaves[0].tabs[0]];
+    $("ktitle").textContent = `Tabelle ${t.tab} · S. ${t.seite}`;
+  } else {
+    $("ktitle").textContent = Object.keys(ks.ans).length ? "Kandidaten" : "Alle Mineralien";
+  }
+  renderList();
+
+  function renderList() {
+    let res = leafRows(leaves);
+    if (ks.d != null) { const c = DCLS[ks.d]; res = res.filter(r => r.dmin != null && r.dmax >= c.a && r.dmin <= c.b); }
+    const q = ks.q.trim().toLowerCase();
+    if (q) res = res.filter(r => q.split(/\s+/).every(w => r.hay.includes(w)));
+    const tabs = new Set(res.map(r => r.tab.replace(" (Forts.)", "")));
+    $("kcount").innerHTML = `<b>${res.length}</b> ${res.length === 1 ? "Eintrag" : "Einträge"} in <b>${tabs.size}</b> ${tabs.size === 1 ? "Tabelle" : "Tabellen"}`;
+    const head = `<div class="head cols" aria-hidden="true"><div>Name</div><div class="hfo">Formel</div><div>H</div><div>D</div><div>Farbe</div><div>Strich</div><div>Glanz</div><div>Spaltb./Bruch</div><div>Tab.</div></div>`;
+    $("klist").innerHTML = head + (res.length ? res.map(rowHTML).join("") :
+      `<div class="empty">Kein Eintrag passt. Nimm die Dichte- oder Textangabe zurück oder ändere eine Antwort oben.</div>`);
+  }
+}
+
+$("kq").addEventListener("click", e => {
+  const o = e.target.closest(".opt"); if (o) { answer(o.dataset.k, o.dataset.v); return; }
+  const a = e.target.closest("[data-alt]"); if (a) { const { k, v } = JSON.parse(a.dataset.alt); const idx = STEPS.findIndex(s => s.k === k); STEPS.slice(idx + 1).forEach(s => delete ks.ans[s.k]); ks.ans[k] = v; ks.d = null; ks.q = ""; renderKey(); return; }
+  if (e.target.closest("[data-restart]")) { ks.ans = {}; ks.d = null; ks.q = ""; renderKey(); }
+});
+$("kpath").addEventListener("click", e => { const c = e.target.closest("[data-undo]"); if (c) undoFrom(c.dataset.undo); });
+
+function rerender() { update(); renderKey(); }
+
+/* ---------- Ansichten ---------- */
+function setView(v) {
+  const key = v !== "tabelle";
+  $("view-schluessel").hidden = !key; $("view-tabelle").hidden = key;
+  $("tab-schluessel").setAttribute("aria-selected", key); $("tab-tabelle").setAttribute("aria-selected", !key);
+  try { localStorage.setItem("mb-view", key ? "schluessel" : "tabelle"); } catch (e) {}
+  update(); renderKey();
+}
+$("tab-schluessel").addEventListener("click", () => setView("schluessel"));
+$("tab-tabelle").addEventListener("click", () => setView("tabelle"));
+
+if (window.matchMedia("(max-width: 900px)").matches) $("pult").open = false;
+let startView = location.hash === "#tabelle" ? "tabelle" : location.hash === "#schluessel" ? "schluessel" : null;
+if (!startView) { try { startView = localStorage.getItem("mb-view"); } catch (e) {} }
+setView(startView || "schluessel");
+</script>
