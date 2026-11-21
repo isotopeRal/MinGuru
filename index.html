@@ -181,6 +181,65 @@ th { font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; co
 .restart { justify-self: start; }
 @media (max-width: 480px) { .mohsref { font-size: 8.5px; } }
 .ktitle { font-family: var(--f-display); font-weight: 650; font-size: var(--s1); margin: 0 0 2px; }
+/* ---------- Kristallmodelle ---------- */
+:root { --m-hell: #ffffff; --m-schatten: #b9c3c1; --m-papier: #fbfcfb; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --m-hell: #46524f; --m-schatten: #1f2729; --m-papier: #172022; } }
+:root[data-theme="dark"] { --m-hell: #46524f; --m-schatten: #1f2729; --m-papier: #172022; }
+.km-stil { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); padding: 3px; align-self: center; }
+.km-stil button { font: inherit; font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 12px; min-height: 36px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.km-stil button[aria-pressed="true"] { background: var(--accent); color: var(--panel); }
+.km-stil .dot { width: 11px; height: 11px; border-radius: 3px; border: 1px solid rgba(0,0,0,.25); }
+.km-stil .dot.holz { background: linear-gradient(135deg, #e0b27a, #9a6232); }
+.km-stil .dot.buch { background: #fff; border-color: #1c2427; }
+.cols { grid-template-columns: 56px minmax(130px,1.25fr) minmax(120px,1.35fr) 92px 58px minmax(110px,1.1fr) minmax(100px,1fr) 78px minmax(110px,1.1fr) 64px; }
+.modell { align-self: center; display: grid; justify-items: center; gap: 2px; text-align: center; }
+.modell svg { width: 52px; height: 52px; display: block; }
+.km-cap { display: none; font-size: 11.5px; color: var(--muted); line-height: 1.25; }
+.km-cap b { font-family: var(--f-mono); font-weight: 500; color: var(--ink); }
+.km-silchip { display: block; width: fit-content; margin: 3px auto 0; font-size: 11px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 1px 7px; }
+.detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.d-dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 24px; margin: 0; }
+.kristall { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 14px 24px; align-items: start; }
+.buehne { background: var(--m-papier); border: 1px solid var(--line); border-radius: 10px; position: relative; }
+.buehne svg { width: 100%; height: auto; aspect-ratio: 1; display: block; touch-action: none; cursor: grab; }
+.buehne svg:active { cursor: grabbing; }
+.buehne .tipp { position: absolute; left: 10px; bottom: 7px; font-size: 11.5px; color: var(--muted); pointer-events: none; }
+.km-steuer { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.km-steuer .chip { min-height: 34px; }
+.km-steuer .chip:disabled { opacity: .45; cursor: default; }
+.km-legende { display: flex; flex-wrap: wrap; gap: 3px 12px; margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.km-legende span { display: inline-flex; align-items: center; gap: 5px; }
+.km-legende svg { width: 15px; height: 15px; }
+.km-info { display: grid; gap: 16px; align-content: start; }
+.km-h { font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+.km-p { margin: 0 0 6px; max-width: 70ch; }
+.km-klein { margin: 6px 0 0; font-size: 12.5px; color: var(--muted); max-width: 70ch; }
+.km-mono { font-family: var(--f-mono); font-size: 12.5px; }
+.km-sil { border-top: 1px solid var(--line); padding-top: 12px; }
+.km-silkopf { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; margin-bottom: 8px; }
+.km-silkopf b { font-family: var(--f-display); font-size: 16px; font-weight: 650; }
+.km-silkopf span { color: var(--muted); font-size: 13px; }
+.km-silkopf .km-mono { color: var(--ink); }
+.km-schema { background: var(--m-papier); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+.km-schema svg { width: 100%; height: auto; max-height: 200px; display: block; }
+.km-reihe { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.km-reihe button { font: inherit; font-size: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--muted); border-radius: 6px; padding: 3px 8px; min-height: 30px; cursor: pointer; }
+.km-reihe button[aria-current="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+@container list (max-width: 1040px) and (min-width: 761px) {
+  .cols { grid-template-columns: 48px minmax(120px,1.3fr) 84px 52px minmax(100px,1fr) minmax(90px,1fr) 72px minmax(100px,1.1fr) 60px; }
+  .modell svg { width: 46px; height: 46px; }
+}
+@container list (max-width: 760px) {
+  .cols { grid-template-columns: minmax(0, 1fr) auto; }
+  .row .modell { grid-column: 2; grid-row: 2 / span 7; align-self: start; width: 104px; }
+  .row .modell svg { width: 96px; height: 96px; }
+  .row .km-cap { display: block; }
+  .row .fo, .row .cell, .row .cell.h { grid-column: 1; }
+  .row .cell.d { grid-column: 1; grid-row: auto; justify-content: flex-start; }
+  .cell.d .lbl { min-width: 52px; }
+  .kristall { grid-template-columns: minmax(0, 1fr); }
+  .buehne { max-width: 420px; }
+}
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
@@ -190,7 +249,12 @@ th { font-size: var(--s-1); text-transform: uppercase; letter-spacing: .06em; co
       <h1>Mineralbestimmung nach äußeren Kennzeichen</h1>
       <p class="src">Alle 24 Tabellen aus Tennyson (1981), überarbeitet von Herting-Agthe &amp; Agthe (TU Berlin, 1998). Mineralien, die das Original in mehreren Tabellen führt, erscheinen auch hier mehrfach.</p>
     </div>
+    <div class="km-stil" role="group" aria-label="Darstellung der Kristallmodelle">
+      <button type="button" data-km-stil="holz"><span class="dot holz"></span>Holzmodell</button>
+      <button type="button" data-km-stil="buch"><span class="dot buch"></span>Lehrbuch</button>
+    </div>
   </header>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="maser" patternUnits="userSpaceOnUse" width="256" height="256"><image id="maser-bild" width="256" height="256"/></pattern></defs></svg>
 
   <nav class="views" role="tablist" aria-label="Ansicht">
     <button type="button" role="tab" id="tab-schluessel" aria-controls="view-schluessel">Geführt bestimmen</button>
@@ -434,6 +498,7 @@ function rowHTML(r) {
   const open = st.open.has(r.i);
   const auch = r.auch.length ? r.auch.map(t => `<button type="button" class="jump" data-tab="${esc(t)}">Tab. ${esc(t)}</button>`).join("") : "";
   return `<div class="row cols" role="listitem" tabindex="0" data-i="${r.i}" aria-expanded="${open}">
+    <div class="modell" title="Kristallmodell (Idealform)">${KM.thumb(r)}<span class="km-cap">${KM.caption(r)}</span></div>
     <div class="nm"><a class="nm-link" href="${esc(r.mindat)}" target="_blank" rel="noopener" title="${esc(r.mindat_en)} auf mindat.org öffnen">${esc(r.name)}<span class="ext" aria-hidden="true">↗</span></a>${r.syn ? `<span class="syn">${esc(r.syn)}</span>` : ""}<span class="fo-in">${esc(r.formel)}</span></div>
     <div class="fo">${esc(r.formel)}</div>
     <div class="cell h"><span class="lbl">H</span><span class="num">${esc(r.H)}<span class="hbar" aria-hidden="true"><i style="left:${l}%;width:${w}%"></i></span></span></div>
@@ -443,7 +508,7 @@ function rowHTML(r) {
     <div class="cell"><span class="lbl">Glanz</span><span>${esc(r.glanz)}</span></div>
     <div class="cell"><span class="lbl">Spaltb.</span><span>${esc(r.spalt)}</span></div>
     <div class="tab" title="Seite ${r.seite}">${esc(r.tab.replace(" (Forts.)", ""))}<span class="syn">S. ${r.seite}</span></div>
-    ${open ? `<dl class="detail">
+    ${open ? `<div class="detail">${KM.html(r)}<dl class="d-dl">
       <div><dt>Kristallsystem, -klasse</dt><dd>${esc(r.system)}</dd></div>
       <div><dt>Ausbildung, Kristallform</dt><dd>${esc(r.ausb)}</dd></div>
       <div><dt>Bemerkungen</dt><dd>${esc(r.bem)}</dd></div>
@@ -451,7 +516,7 @@ function rowHTML(r) {
       <div><dt>Weitere Informationen</dt><dd><a href="${esc(r.mindat)}" target="_blank" rel="noopener">${esc(r.mindat_en)} auf mindat.org</a></dd></div>
       ${auch ? `<div><dt>Auch aufgeführt in</dt><dd>${auch}</dd></div>` : ""}
       ${r.anm ? `<div class="anm">Hinweis zur Transkription: ${esc(r.anm)}</div>` : ""}
-    </dl>` : ""}
+    </dl></div>` : ""}
   </div>`;
 }
 
@@ -462,7 +527,7 @@ function update() {
   $("fcount").textContent = n ? `· ${n} Filter aktiv` : "";
   const uniq = new Set(res.map(r => r.name)).size;
   $("count").innerHTML = `<b>${res.length}</b> ${res.length === 1 ? "Eintrag" : "Einträge"}${st.dedupe ? "" : `, <b>${uniq}</b> verschiedene Mineralien`}`;
-  const head = `<div class="head cols" aria-hidden="true">
+  const head = `<div class="head cols" aria-hidden="true"><div></div>
     <div><button type="button" data-sort="name" data-active="${st.sort === "name"}">Name</button></div><div class="hfo">Formel</div>
     <div><button type="button" data-sort="h" data-active="${st.sort === "h"}">H</button></div>
     <div><button type="button" data-sort="d" data-active="${st.sort === "d"}">D</button></div>
@@ -690,7 +755,7 @@ function renderKey() {
     if (q) res = res.filter(r => q.split(/\s+/).every(w => r.hay.includes(w)));
     const tabs = new Set(res.map(r => r.tab.replace(" (Forts.)", "")));
     $("kcount").innerHTML = `<b>${res.length}</b> ${res.length === 1 ? "Eintrag" : "Einträge"} in <b>${tabs.size}</b> ${tabs.size === 1 ? "Tabelle" : "Tabellen"}`;
-    const head = `<div class="head cols" aria-hidden="true"><div>Name</div><div class="hfo">Formel</div><div>H</div><div>D</div><div>Farbe</div><div>Strich</div><div>Glanz</div><div>Spaltb./Bruch</div><div>Tab.</div></div>`;
+    const head = `<div class="head cols" aria-hidden="true"><div></div><div>Name</div><div class="hfo">Formel</div><div>H</div><div>D</div><div>Farbe</div><div>Strich</div><div>Glanz</div><div>Spaltb./Bruch</div><div>Tab.</div></div>`;
     $("klist").innerHTML = head + (res.length ? res.map(rowHTML).join("") :
       `<div class="empty">Kein Eintrag passt. Nimm die Dichte- oder Textangabe zurück oder ändere eine Antwort oben.</div>`);
   }
@@ -704,6 +769,812 @@ $("kq").addEventListener("click", e => {
 $("kpath").addEventListener("click", e => { const c = e.target.closest("[data-undo]"); if (c) undoFrom(c.dataset.undo); });
 
 function rerender() { update(); renderKey(); }
+
+/* =====================================================================
+   Kristallmodelle und Silikatstrukturen
+   ---------------------------------------------------------------------
+   Für jedes Mineral wird aus Kristallklasse (Punktgruppe), Gitterkonstanten
+   und den typischen Flächenformen (Miller-Indizes) ein Polyeder berechnet
+   und als SVG gezeichnet – als Holzmodell oder als Lehrbuchzeichnung.
+   Alles ist von außen über das Objekt KM erreichbar, damit keine Namen
+   mit dem übrigen Skript kollidieren.
+   ===================================================================== */
+const KM = (() => {
+
+/* ---------- 1. Formtabelle ----------
+   Name: [Punktgruppe, Zelle, Formen]
+   Zelle: kubisch null · tetragonal/trigonal/hexagonal [a, c] · orthorhombisch [a, b, c]
+          monoklin [a, b, c, β] · triklin [a, b, c, α, β, γ]   (nur die Verhältnisse zählen)
+   Form: [h, k, l, d] – Miller-Indizes (hexagonal ohne i) und Zentralabstand d;
+          größeres d = kleinere Fläche. Optional als 5. Wert ein eigener Formname. */
+const GLIMMER = [5.2, 9.0, 20.0, 95.7];
+const AMPHIBOL = [9.84, 18.05, 5.28, 104.7];
+const PYROXEN = [9.7, 8.9, 5.25, 106];
+const FELDSPAT = [8.56, 12.96, 7.21, 116.0];
+const PLAGIOKLAS = [8.14, 12.79, 7.16, 94.3, 116.6, 87.7];
+const GRANAT = ["m-3m", null, [[1, 1, 0, 1], [2, 1, 1, 1.1]]];
+const PLATTE = (dk, c = GLIMMER) => ["2/m", c, [[0, 0, 1, dk], [1, 1, 0, 1], [0, 1, 0, 1]]];
+const KR = {
+  // kubisch
+  "Galenit": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.42]]],
+  "Bleiglanz": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.42]]],
+  "Silber": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.5]]],
+  "Kupfer": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 0, 1.22]]],
+  "Gold": ["m-3m", null, [[1, 1, 1, 1], [1, 0, 0, 1.5]]],
+  "Bornit": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.55]]],
+  "Silberglanz": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.45]]],
+  "Linneit": ["m-3m", null, [[1, 1, 1, 1]]],
+  "Gersdorffit": ["m-3", null, [[1, 0, 0, 1], [1, 1, 1, 1.4]]],
+  "Ullmannit": ["23", null, [[2, 1, 0, 1], [1, 1, 1, 1.12]]],
+  "Chromit": ["m-3m", null, [[1, 1, 1, 1]]],
+  "Magnetit": ["m-3m", null, [[1, 1, 1, 1], [1, 1, 0, 1.32]]],
+  "Cobaltit": ["m-3", null, [[2, 1, 0, 1], [1, 1, 1, 1.15]]],
+  "Chloanthit": ["m-3", null, [[1, 0, 0, 1], [2, 1, 0, 1.22], [1, 1, 1, 1.5]]],
+  "Skutterudit": ["m-3", null, [[1, 1, 1, 1], [2, 1, 0, 1.05]]],
+  "Uraninit": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.3]]],
+  "Pyrit": ["m-3", null, [[2, 1, 0, 1]]],
+  "Tennantit": ["-43m", null, [[1, 1, 1, 1], [-1, -1, -1, 2.3]]],
+  "Tetraedrit": ["-43m", null, [[1, 1, 1, 1], [1, 0, 0, 1.6]]],
+  "Sphalerit": ["-43m", null, [[1, 1, 1, 1], [-1, -1, -1, 1.6]]],
+  "Cuprit": ["m-3m", null, [[1, 1, 1, 1], [1, 1, 0, 1.1]]],
+  "Franklinit": ["m-3m", null, [[1, 1, 1, 1], [1, 1, 0, 1.12]]],
+  "Steinsalz": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.6]]],
+  "Sylvin": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.5]]],
+  "Kryolith": ["m-3m", null, [[1, 0, 0, 1]]],
+  "Fluorit": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.62]]],
+  "Analcim": ["m-3m", null, [[2, 1, 1, 1]]],
+  "Leucit": ["m-3m", null, [[2, 1, 1, 1]]],
+  "Sodalith": ["-43m", null, [[1, 1, 0, 1]]],
+  "Hauyn": ["-43m", null, [[1, 1, 0, 1]]],
+  "Lasurit": ["-43m", null, [[1, 1, 0, 1]]],
+  "Periklas": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.5]]],
+  "Diamant": ["m-3m", null, [[1, 1, 1, 1]]],
+  "Spinell": ["m-3m", null, [[1, 1, 1, 1]]],
+  "Pyrop": GRANAT, "Almandin": GRANAT, "Grossular": GRANAT, "Andradit": GRANAT,
+  "Spessartin": ["m-3m", null, [[2, 1, 1, 1], [1, 1, 0, 1.08]]],
+  "Uwarowit": ["m-3m", null, [[1, 1, 0, 1]]],
+  "Boracit": ["-43m", null, [[1, 0, 0, 1], [1, 1, 1, 1.25], [-1, -1, -1, 1.5]]],
+  "Perowskit": ["m-3m", null, [[1, 0, 0, 1], [1, 1, 1, 1.6]]],
+  // tetragonal
+  "Cristobalit": ["4/mmm", [1, 1], [[1, 0, 1, 1]]],
+  "Chalkopyrit": ["-42m", [5.29, 10.42], [[1, 1, 2, 1], [1, -1, 2, 1.35]]],
+  "Stannit": ["-42m", [5.45, 10.74], [[1, 1, 2, 1], [1, -1, 2, 1.2]]],
+  "Melilith": ["-42m", [7.8, 5.0], [[0, 0, 1, 0.55], [1, 0, 0, 1], [1, 1, 0, 1.05]]],
+  "Pyrolusit": ["4/mmm", [4.4, 2.87], [[1, 1, 0, 1], [1, 0, 0, 1.1], [1, 0, 1, 3.4]]],
+  "Braunit": ["4/mmm", [9.43, 18.7], [[1, 1, 2, 1]]],
+  "Rutil": ["4/mmm", [4.59, 2.96], [[1, 1, 0, 1], [1, 0, 0, 1.08], [1, 0, 1, 2.6], [1, 1, 1, 2.75]]],
+  "Kassiterit": ["4/mmm", [4.74, 3.19], [[1, 1, 0, 1], [1, 0, 0, 1.05], [1, 0, 1, 1.35], [1, 1, 1, 1.5]]],
+  "Xenotim": ["4/mmm", [6.9, 6.04], [[1, 0, 0, 1], [1, 0, 1, 1.25]]],
+  "Apophyllit": ["4/mmm", [8.96, 15.8], [[1, 0, 0, 1], [1, 0, 1, 1.25], [0, 0, 1, 1.05]]],
+  "Anatas": ["4/mmm", [3.78, 9.51], [[1, 0, 1, 1], [0, 0, 1, 2.6]]],
+  "Vesuvian": ["4/mmm", [15.5, 11.8], [[1, 0, 0, 1], [1, 1, 0, 1.05], [0, 0, 1, 1.15], [1, 0, 1, 1.35]]],
+  "Zirkon": ["4/mmm", [6.61, 5.98], [[1, 0, 0, 1], [1, 0, 1, 1.75]]],
+  "Wulfenit": ["4/m", [5.43, 12.1], [[0, 0, 1, 0.3], [1, 0, 1, 1]]],
+  "Scheelit": ["4/m", [5.24, 11.38], [[1, 1, 2, 1]]],
+  "Skapolith": ["4/m", [12.1, 7.6], [[1, 0, 0, 1], [1, 1, 0, 1.03], [1, 1, 1, 1.9]]],
+  "Autunit": ["4/mmm", [7.0, 20.0], [[0, 0, 1, 0.18], [1, 0, 0, 1]]],
+  "Torbernit": ["4/mmm", [7.05, 17.3], [[0, 0, 1, 0.25], [1, 0, 0, 1], [1, 0, 1, 1.08]]],
+  "Uranocircit": ["4/mmm", [7.0, 17.0], [[0, 0, 1, 0.2], [1, 0, 0, 1]]],
+  "Kryptomelan": ["4/mmm", [9.8, 2.86], [[1, 1, 0, 1], [1, 0, 0, 1.05], [1, 0, 1, 3.2]]],
+  // hexagonal
+  "Graphit": ["6/mmm", [2.46, 6.7], [[0, 0, 1, 0.22], [1, 0, 0, 1]]],
+  "Molybdänit": ["6/mmm", [3.16, 12.3], [[0, 0, 1, 0.4], [1, 0, 0, 1], [1, 0, 1, 1.05]]],
+  "Covellin": ["6/mmm", [3.79, 16.3], [[0, 0, 1, 0.25], [1, 0, 0, 1]]],
+  "Pyrrhotin": ["6/mmm", [3.45, 5.75], [[0, 0, 1, 0.5], [1, 0, 0, 1], [1, 0, 1, 1.15]]],
+  "Nickelin": ["6/mmm", [3.6, 5.0], [[1, 0, 0, 1], [1, 0, 1, 1.15], [0, 0, 1, 1.4]]],
+  "Kupferglanz": ["6/mmm", [3.9, 6.7], [[0, 0, 1, 0.6], [1, 0, 0, 1], [1, 0, 1, 1.1]]],
+  "Wurtzit": ["6mm", [3.82, 6.26], [[1, 0, 0, 1], [1, 0, 1, 1.4], [0, 0, -1, 1.6]]],
+  "Zinkit": ["6mm", [3.25, 5.2], [[1, 0, 0, 1], [1, 0, 1, 1.2], [0, 0, -1, 1.3]]],
+  "Vanadinit": ["6/m", [10.3, 7.34], [[1, 0, 0, 1], [0, 0, 1, 1.0], [1, 0, 1, 1.2]]],
+  "Pyromorphit": ["6/m", [9.98, 7.35], [[1, 0, 0, 1], [0, 0, 1, 1.6], [1, 0, 1, 1.75]]],
+  "Mimetesit": ["6/m", [10.24, 7.44], [[1, 0, 0, 1], [0, 0, 1, 1.5], [1, 0, 1, 1.7]]],
+  "Apatit": ["6/m", [9.37, 6.88], [[1, 0, 0, 1], [0, 0, 1, 1.5], [1, 0, 1, 1.65]]],
+  "Beryll": ["6/mmm", [9.21, 9.19], [[1, 0, 0, 1], [0, 0, 1, 1.9], [1, 0, 1, 1.95]]],
+  "Nephelin": ["6", [10.0, 8.4], [[1, 0, 0, 1], [0, 0, 1, 0.95], [0, 0, -1, 0.95]]],
+  "Tridymit": ["6/mmm", [5.03, 8.22], [[0, 0, 1, 0.3], [1, 0, 0, 1]]],
+  // trigonal
+  "Wismut": ["-3m", [4.55, 11.86], [[1, 0, 1, 1], [0, 0, 1, 1.3]]],
+  "Antimon": ["-3m", [4.31, 11.27], [[1, 0, 1, 1], [0, 0, 1, 1.0]]],
+  "Arsen": ["-3m", [3.76, 10.55], [[0, 0, 1, 0.8], [1, 0, 1, 1]]],
+  "Millerit": ["3m", [9.62, 3.15], [[1, 0, 0, 1], [1, 1, 0, 1], [0, 0, 1, 3], [0, 0, -1, 3]]],
+  "Pyrargyrit": ["3m", [11.05, 8.72], [[1, 1, 0, 1], [1, 0, 0, 1.1], [1, 0, 1, 1.7], [0, 1, -1, 1.5]]],
+  "Proustit": ["3m", [10.8, 8.69], [[1, 1, 0, 1], [1, 0, 0, 1.12], [1, 0, 1, 1.6], [0, 1, -1, 1.45]]],
+  "Ilmenit": ["-3", [5.09, 14.09], [[0, 0, 1, 0.42], [1, 0, 1, 1], [1, 1, 0, 1.1]]],
+  "Hämatit": ["-3m", [5.04, 13.75], [[0, 0, 1, 0.42], [1, 0, 1, 1]]],
+  "Brucit": ["-3m", [3.15, 4.77], [[0, 0, 1, 0.35], [1, 0, 1, 1]]],
+  "Calcit": ["-3m", [1, 0.8543], [[2, 1, 1, 1], [1, 0, 1, 1.6]]],
+  "Dolomit": ["-3", [1, 0.832], [[1, 0, 1, 1]]],
+  "Rhodochrosit": ["-3m", [1, 0.82], [[1, 0, 1, 1]]],
+  "Magnesit": ["-3m", [1, 0.81], [[1, 0, 1, 1]]],
+  "Siderit": ["-3m", [1, 0.82], [[1, 0, 1, 1], [0, 0, 1, 0.75]]],
+  "Smithsonit": ["-3m", [1, 0.806], [[1, 0, 1, 1]]],
+  "Chabasit": ["-3m", [13.8, 15.0], [[1, 0, 1, 1]]],
+  "Korund": ["-3m", [4.76, 12.99], [[2, 2, 3, 1], [0, 0, 1, 1.5], [1, 0, 1, 1.4]]],
+  "Quarz": ["32", [4.91, 5.40], [[1, 0, 0, 1], [1, 0, 1, 2.15], [0, 1, 1, 2.3]]],
+  "Zinnober": ["32", [4.15, 9.5], [[1, 0, 1, 1], [0, 0, 1, 0.7]]],
+  "Turmalin": ["3m", [15.9, 7.1], [[1, 0, 0, 1], [1, 1, 0, 1.12], [1, 0, 1, 2.0], [0, 2, -1, 2.1]]],
+  "Phenakit": ["-3", [12.47, 8.25], [[1, 1, 0, 1], [1, 0, 1, 1.25]]],
+  "Willemit": ["-3", [13.94, 9.31], [[1, 1, 0, 1], [1, 0, 1, 1.5]]],
+  "Dioptas": ["-3", [14.6, 7.8], [[1, 1, 0, 1], [1, 0, 1, 1.2]]],
+  // orthorhombisch
+  "Bismuthinit": ["mmm", [11.15, 11.3, 3.98], [[1, 1, 0, 1], [1, 0, 0, 1.0], [1, 1, 1, 3.2]]],
+  "Antimonit": ["mmm", [11.23, 11.31, 3.84], [[1, 1, 0, 1], [0, 1, 0, 1.05], [1, 1, 1, 4.0]]],
+  "Niobit": ["mmm", [14.27, 5.73, 5.1], [[1, 0, 0, 0.5], [0, 1, 0, 1.0], [1, 1, 0, 1.1], [1, 1, 1, 1.3]]],
+  "Tantalit": ["mmm", [14.4, 5.76, 5.08], [[1, 0, 0, 0.7], [1, 1, 0, 1], [0, 0, 1, 1.6], [1, 1, 1, 1.5]]],
+  "Mangantantalit": ["mmm", [14.4, 5.76, 5.08], [[1, 0, 0, 0.5], [0, 1, 0, 1.0], [1, 1, 0, 1.1], [1, 1, 1, 1.3]]],
+  "Löllingit": ["mmm", [5.3, 5.99, 2.88], [[1, 1, 0, 1], [0, 1, 1, 1.9]]],
+  "Markasit": ["mmm", [4.44, 5.42, 3.39], [[0, 1, 0, 0.55], [1, 1, 0, 1], [1, 0, 1, 1.05]]],
+  "Carnallit": ["mmm", [9.6, 16.1, 22.5], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 0.8], [1, 1, 1, 1.4]]],
+  "Schwefel": ["mmm", [10.47, 12.87, 24.49], [[1, 1, 1, 1], [1, 1, 3, 1.1], [0, 0, 1, 1.15]]],
+  "Sepiolith": ["mmm", [13.4, 26.8, 5.28], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 3]]],
+  "Baryt": ["mmm", [8.88, 5.45, 7.15], [[0, 0, 1, 0.42], [2, 1, 0, 1], [0, 1, 1, 0.72], [1, 0, 2, 0.62]]],
+  "Coelestin": ["mmm", [8.36, 5.35, 6.87], [[0, 0, 1, 0.7], [2, 1, 0, 1], [0, 1, 1, 0.95], [1, 0, 2, 0.9]]],
+  "Anhydrit": ["mmm", [6.99, 7.0, 6.24], [[1, 0, 0, 1], [0, 1, 0, 0.85], [0, 0, 1, 0.75], [1, 1, 1, 1.45]]],
+  "Anglesit": ["mmm", [8.48, 5.4, 6.96], [[2, 1, 0, 1], [0, 1, 1, 1.0], [1, 0, 2, 1.05], [0, 0, 1, 1.3]]],
+  "Cerussit": ["mmm", [5.15, 8.47, 6.11], [[1, 1, 0, 1], [0, 1, 0, 1.0], [0, 2, 1, 1.6], [1, 1, 1, 1.6]]],
+  "Strontianit": ["mmm", [5.1, 8.4, 6.0], [[1, 1, 0, 1], [0, 1, 0, 1.0], [0, 2, 1, 2.0], [1, 1, 1, 2.0]]],
+  "Witherit": ["mmm", [5.31, 8.9, 6.43], [[1, 1, 1, 1], [0, 2, 1, 1.0], [1, 1, 0, 1.2], [0, 1, 0, 1.2]]],
+  "Aragonit": ["mmm", [4.96, 7.97, 5.74], [[1, 1, 0, 1], [0, 1, 0, 1], [1, 1, 1, 2.6], [0, 2, 1, 2.6]]],
+  "Wavellit": ["mmm", [9.6, 17.4, 7.0], [[1, 1, 0, 1], [1, 0, 1, 3]]],
+  "Triphylin": ["mmm", [10.3, 6.0, 4.7], [[1, 0, 0, 1], [0, 1, 0, 0.9], [0, 0, 1, 0.8], [1, 1, 1, 1.4]]],
+  "Lithiophilit": ["mmm", [10.4, 6.1, 4.7], [[1, 0, 0, 1], [0, 1, 0, 0.9], [0, 0, 1, 0.8], [1, 1, 1, 1.4]]],
+  "Hemimorphit": ["mm2", [8.37, 10.73, 5.11], [[1, 1, 0, 1], [0, 1, 0, 0.62], [0, 0, 1, 1.7], [0, 3, 1, 1.55], [1, 2, -1, 1.25]]],
+  "Natrolith": ["mm2", [18.3, 18.6, 6.6], [[1, 1, 0, 1], [1, 1, 1, 3.2], [0, 0, -1, 2.8]]],
+  "Bronzit": ["mmm", [18.2, 8.8, 5.2], [[1, 0, 0, 1], [0, 1, 0, 1], [2, 1, 0, 1.15], [2, 1, 1, 1.8]]],
+  "Hypersthen": ["mmm", [18.2, 8.8, 5.2], [[1, 0, 0, 1], [0, 1, 0, 1], [2, 1, 0, 1.15], [2, 1, 1, 1.8]]],
+  "Andalusit": ["mmm", [7.8, 7.9, 5.55], [[1, 1, 0, 1], [0, 0, 1, 2.0]]],
+  "Brookit": ["mmm", [9.18, 5.45, 5.15], [[1, 0, 0, 0.4], [1, 1, 0, 1], [1, 2, 2, 1.1]]],
+  "Zoisit": ["mmm", [16.2, 5.55, 10.0], [[1, 0, 0, 1], [1, 0, 1, 1.1], [0, 1, 0, 2.6], [0, 0, 1, 1.3]]],
+  "Sillimanit": ["mmm", [7.48, 7.67, 5.77], [[1, 1, 0, 1], [0, 1, 0, 1.05], [0, 0, 1, 3.5]]],
+  "Diaspor": ["mmm", [4.4, 9.42, 2.84], [[0, 1, 0, 0.4], [1, 1, 0, 1], [1, 1, 1, 1.6]]],
+  "Topas": ["mmm", [4.65, 8.8, 8.39], [[1, 1, 0, 1], [1, 2, 0, 1], [0, 0, 1, 1.6], [0, 2, 1, 1.55], [1, 1, 1, 1.65]]],
+  "Prehnit": ["mmm", [4.6, 5.5, 18.5], [[0, 0, 1, 0.35], [1, 1, 0, 1]]],
+  "Olivin": ["mmm", [4.76, 10.2, 5.98], [[0, 1, 0, 0.9], [1, 1, 0, 1], [0, 2, 1, 1.2], [1, 0, 1, 1.2], [0, 0, 1, 1.45]]],
+  "Cordierit": ["mmm", [17.1, 9.7, 9.3], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1.4]]],
+  "Dumortierit": ["mmm", [11.8, 20.2, 4.7], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 3]]],
+  "Chrysoberyll": ["mmm", [4.42, 9.4, 5.47], [[1, 0, 0, 0.45], [0, 1, 0, 1], [1, 1, 0, 1.0], [0, 1, 1, 1.1], [1, 1, 1, 1.15]]],
+  "Descloizit": ["mmm", [7.6, 6.07, 9.4], [[1, 1, 0, 1], [1, 1, 1, 1.4], [1, 0, 1, 1.4]]],
+  "Mottramit": ["mmm", [7.67, 6.05, 9.32], [[1, 1, 0, 1], [1, 1, 1, 1.4], [1, 0, 1, 1.4]]],
+  "Lepidokrokit": ["mmm", [3.88, 12.5, 3.07], [[0, 1, 0, 0.35], [1, 0, 1, 1], [1, 0, 0, 1.1]]],
+  "Goethit": ["mmm", [4.6, 9.96, 3.02], [[1, 1, 0, 1], [0, 1, 0, 1], [1, 1, 1, 3.0]]],
+  "Olivenit": ["mmm", [8.6, 8.6, 5.94], [[1, 1, 0, 1], [1, 0, 1, 1.4], [0, 1, 1, 1.4]]],
+  "Rockbridgeit": ["mmm", [13.8, 16.8, 5.2], [[1, 1, 0, 1], [0, 0, 1, 3]]],
+  "Epsomit": ["222", [11.86, 11.99, 6.86], [[1, 1, 0, 1], [1, 1, 1, 1.6], [1, -1, 1, 1.9]]],
+  "Enargit": ["mm2", [7.41, 6.45, 6.15], [[1, 1, 0, 1], [1, 0, 0, 1.1], [0, 1, 0, 1.05], [0, 0, 1, 2.2], [0, 0, -1, 2.2]]],
+  "Bournonit": ["mm2", [8.16, 8.7, 7.81], [[0, 0, 1, 0.6], [0, 0, -1, 0.6], [1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.25], [1, 0, 1, 1.05]]],
+  // monoklin
+  "Jamesonit": ["2/m", [15.6, 18.9, 4.03, 91.8], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 3.5]]],
+  "Boulangerit": ["2/m", [21.5, 23.5, 8.08, 100.7], [[1, 1, 0, 1], [1, 0, 0, 1], [0, 0, 1, 3.5]]],
+  "Manganit": ["2/m", [8.88, 5.25, 5.71, 90.0], [[1, 1, 0, 1], [0, 1, 0, 1.05], [1, 0, 1, 2.8], [-1, 0, 1, 2.8]]],
+  "Wolframit": ["2/m", [4.79, 5.73, 4.98, 90.6], [[1, 0, 0, 0.55], [1, 1, 0, 1], [0, 0, 1, 1.9], [0, 1, 1, 1.6]]],
+  "Ferberit": ["2/m", [4.73, 5.7, 4.96, 90.0], [[1, 0, 0, 0.55], [1, 1, 0, 1], [0, 0, 1, 1.9], [0, 1, 1, 1.6]]],
+  "Hübnerit": ["2/m", [4.83, 5.76, 4.99, 91.2], [[1, 0, 0, 0.5], [1, 1, 0, 1], [0, 0, 1, 2.1], [0, 1, 1, 1.7]]],
+  "Arsenopyrit": ["2/m", [5.74, 5.68, 5.79, 90], [[1, 1, 0, 1], [0, 1, 1, 1.1]]],
+  "Talk": PLATTE(0.22), "Pyrophyllit": PLATTE(0.25), "Kaolinit": PLATTE(0.18),
+  "Chlorit": PLATTE(0.3), "Kämmererit": PLATTE(0.3), "Antigorit": PLATTE(0.35), "Chloritoid": PLATTE(0.4),
+  "Muskovit": PLATTE(0.28), "Zinnwaldit": PLATTE(0.3), "Lepidolith": PLATTE(0.3), "Phlogopit": PLATTE(0.35),
+  "Biotit": PLATTE(0.45), "Margarit": PLATTE(0.3),
+  "Gips": ["2/m", [5.68, 15.18, 6.29, 113.8], [[0, 1, 0, 0.55], [1, 2, 0, 1], [-1, 1, 1, 1.4]]],
+  "Annabergit": ["2/m", [10.18, 13.22, 4.72, 105], [[0, 1, 0, 0.45], [1, 1, 0, 1], [1, 0, 0, 1.05], [0, 0, 1, 2.2], [-1, 0, 1, 2.0]]],
+  "Erythrin": ["2/m", [10.25, 13.34, 4.76, 105], [[0, 1, 0, 0.4], [1, 1, 0, 1], [1, 0, 0, 1.05], [0, 0, 1, 2.0], [-1, 0, 1, 1.9]]],
+  "Vivianit": ["2/m", [10.08, 13.43, 4.70, 104.3], [[0, 1, 0, 0.45], [1, 1, 0, 1], [1, 0, 0, 1.05], [0, 0, 1, 2.4], [-1, 0, 1, 2.2]]],
+  "Kernit": ["2/m", [15.7, 9.15, 7.02, 108.9], [[1, 0, 0, 1], [0, 0, 1, 1], [0, 1, 0, 1.1], [1, 1, 0, 1.25]]],
+  "Borax": ["2/m", [11.9, 10.65, 12.2, 106.6], [[1, 0, 0, 1], [1, 1, 0, 1], [0, 1, 0, 1.2], [0, 0, 1, 1.5], [1, 1, 1, 1.7]]],
+  "Hydrozinkit": ["2/m", [13.6, 6.3, 5.4, 95.5], [[1, 0, 0, 0.4], [0, 1, 0, 1], [0, 0, 1, 2.0]]],
+  "Laumontit": ["2/m", [14.86, 13.18, 7.55, 112], [[1, 1, 0, 1], [-2, 0, 1, 1.4]]],
+  "Kieserit": ["2/m", [6.9, 7.6, 7.6, 116], [[1, 1, 1, 1], [-1, 1, 1, 1], [0, 1, 0, 1.2]]],
+  "Chrysotil": ["2/m", [5.3, 9.2, 14.6, 93], [[1, 1, 0, 1], [0, 1, 0, 1], [0, 0, 1, 4]]],
+  "Heulandit": ["2/m", [17.7, 17.9, 7.4, 116.4], [[0, 1, 0, 0.4], [0, 0, 1, 1], [1, 0, 0, 1.05], [-2, 0, 1, 1.1], [1, 1, 0, 1.3]]],
+  "Stilbit": ["2/m", [13.6, 18.2, 11.3, 90], [[0, 1, 0, 0.45], [1, 0, 0, 1], [0, 0, 1, 1.3], [1, 1, 0, 1.2], [1, 0, 1, 1.5]]],
+  "Triplit–Zwieselit": ["2/m", [12.0, 6.4, 10.0, 105.6], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1.2], [1, 1, 1, 1.45], [-1, 1, 1, 1.45]]],
+  "Triplit": ["2/m", [12.0, 6.4, 10.0, 105.6], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1.2], [1, 1, 1, 1.45], [-1, 1, 1, 1.45]]],
+  "Zwieselit": ["2/m", [12.0, 6.4, 10.0, 105.6], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1.2], [1, 1, 1, 1.45], [-1, 1, 1, 1.45]]],
+  "Phillipsit": ["2/m", [1, 1, 1, 90], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 1, 1, 1.35], [1, 0, 1, 1.35]]],
+  "Harmotom": ["2/m", [1, 1, 1, 90], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 1, 1, 1.35], [1, 0, 1, 1.35]]],
+  "Monazit": ["2/m", [6.79, 7.02, 6.47, 103.5], [[1, 0, 0, 0.6], [0, 1, 0, 1], [1, 1, 0, 1.05], [-1, 0, 1, 1.1], [0, 1, 1, 1.3], [1, 0, 1, 1.25]]],
+  "Titanit": ["2/m", [6.56, 8.72, 7.44, 119.7], [[1, 1, 1, 1], [0, 0, 1, 1.0], [1, 1, 0, 1.15], [-1, 0, 2, 1.25]]],
+  "Sphen": ["2/m", [6.56, 8.72, 7.44, 119.7], [[1, 1, 1, 1], [0, 0, 1, 0.8], [1, 1, 0, 1.1], [-1, 0, 2, 1.2]]],
+  "Tremolit": ["2/m", AMPHIBOL, [[1, 1, 0, 1], [0, 1, 0, 1.1], [0, 1, 1, 2.8], [-1, 0, 1, 2.7]]],
+  "Aktinolith": ["2/m", AMPHIBOL, [[1, 1, 0, 1], [0, 1, 0, 1.1], [0, 1, 1, 2.8], [-1, 0, 1, 2.7]]],
+  "Arfvedsonit": ["2/m", AMPHIBOL, [[1, 1, 0, 1], [0, 1, 0, 1.1], [0, 1, 1, 2.2], [-1, 0, 1, 2.1]]],
+  "Hornblende": ["2/m", AMPHIBOL, [[1, 1, 0, 1], [0, 1, 0, 1.05], [0, 1, 1, 1.25], [-1, 0, 1, 1.2]]],
+  "Diopsid": ["2/m", PYROXEN, [[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.3], [-1, 1, 1, 1.8]]],
+  "Hedenbergit": ["2/m", PYROXEN, [[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.3], [-1, 1, 1, 1.8]]],
+  "Augit": ["2/m", PYROXEN, [[1, 0, 0, 0.82], [0, 1, 0, 0.82], [1, 1, 0, 1], [-1, 1, 1, 1.25]]],
+  "Omphacit": ["2/m", PYROXEN, [[1, 0, 0, 0.82], [0, 1, 0, 0.82], [1, 1, 0, 1], [-1, 1, 1, 1.25]]],
+  "Ägirin": ["2/m", PYROXEN, [[1, 1, 0, 1], [1, 0, 0, 0.95], [0, 1, 0, 1.05], [-2, 2, 1, 2.6]]],
+  "Jadeit": ["2/m", PYROXEN, [[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.3], [-1, 1, 1, 1.8]]],
+  "Spodumen": ["2/m", PYROXEN, [[1, 0, 0, 0.6], [1, 1, 0, 1], [0, 1, 0, 1.1], [-1, 1, 1, 2.0]]],
+  "Lazulith": ["2/m", [7.16, 7.26, 7.24, 120.7], [[1, 1, 1, 1], [-1, 1, 1, 1.0], [0, 1, 0, 1.6]]],
+  "Sanidin": ["2/m", FELDSPAT, [[0, 1, 0, 0.45], [1, 1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.1]]],
+  "Orthoklas": ["2/m", FELDSPAT, [[0, 1, 0, 0.62], [1, 1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.1]]],
+  "Adular": ["2/m", FELDSPAT, [[1, 1, 0, 1], [-1, 0, 1, 1.0]]],
+  "Petalit": ["2/m", [11.7, 5.14, 7.63, 112.5], [[0, 0, 1, 0.8], [1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.2], [-2, 0, 1, 1.3]]],
+  "Epidot": ["2/m", [8.89, 5.63, 10.15, 115.4], [[0, 0, 1, 1], [1, 0, 0, 1.05], [-1, 0, 1, 1.05], [0, 1, 0, 3.0], [0, 1, 1, 2.6], [1, 1, 0, 2.8]]],
+  "Staurolith": ["2/m", [7.87, 16.6, 5.65, 90], [[1, 1, 0, 1], [0, 1, 0, 1.05], [0, 0, 1, 1.9], [1, 0, 1, 1.95]]],
+  "Realgar": ["2/m", [9.3, 13.5, 6.6, 106.4], [[1, 1, 0, 1], [1, 2, 0, 1.1], [0, 0, 1, 1.5], [-1, 0, 1, 1.5], [0, 1, 1, 1.45]]],
+  "Auripigment": ["2/m", [11.5, 9.6, 4.25, 90.7], [[0, 1, 0, 0.55], [1, 1, 0, 1], [1, 0, 1, 2.0]]],
+  "Krokoit": ["2/m", [7.1, 7.4, 6.8, 102.4], [[1, 1, 0, 1], [1, 0, 0, 1.05], [-1, 1, 1, 3.0]]],
+  "Azurit": ["2/m", [5.0, 5.85, 10.35, 92.4], [[0, 0, 1, 0.6], [1, 1, 0, 1], [1, 0, 0, 1.1], [-1, 0, 2, 1.05], [1, 0, 2, 1.0]]],
+  "Brochantit": ["2/m", [13.1, 9.86, 6.02, 103.4], [[1, 1, 0, 1], [0, 1, 0, 1], [1, 1, 1, 2.6]]],
+  "Malachit": ["2/m", [9.5, 11.97, 3.24, 98.7], [[1, 1, 0, 1], [0, 0, 1, 3.2]]],
+  "Psilomelan": ["2/m", [9.56, 2.88, 13.85, 92.5], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1.6]]],
+  // triklin
+  "Kyanit": ["-1", [7.12, 7.85, 5.57, 89.99, 101.1, 106.0], [[1, 0, 0, 0.32], [0, 1, 0, 0.85], [1, 1, 0, 0.9], [1, -1, 0, 0.95], [0, 0, 1, 2.6]]],
+  "Ulexit": ["-1", [8.8, 12.9, 6.7, 90.3, 109, 105], [[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1.1], [0, 0, 1, 4]]],
+  "Wollastonit": ["-1", [7.93, 7.32, 7.07, 90, 95.4, 103.4], [[1, 0, 0, 0.8], [0, 1, 0, 1], [1, -1, 0, 1.1], [0, 0, 1, 3.2]]],
+  "Türkis": ["-1", [7.42, 7.63, 9.91, 68.6, 69.7, 65.1], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1]]],
+  "Amblygonit": ["-1", [5.18, 7.11, 5.04, 112, 97.8, 68.1], [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1.2], [1, -1, 0, 1.25]]],
+  "Mikroklin": ["-1", [8.58, 12.96, 7.22, 90.6, 115.9, 87.7], [[0, 1, 0, 0.62], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.1]]],
+  "Albit": ["-1", PLAGIOKLAS, [[0, 1, 0, 0.5], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.15]]],
+  "Oligoklas": ["-1", PLAGIOKLAS, [[0, 1, 0, 0.55], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.15]]],
+  "Andesin": ["-1", PLAGIOKLAS, [[0, 1, 0, 0.55], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.15]]],
+  "Labradorit": ["-1", PLAGIOKLAS, [[0, 1, 0, 0.55], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.15]]],
+  "Bytownit": ["-1", PLAGIOKLAS, [[0, 1, 0, 0.6], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.05], [-2, 0, 1, 1.15]]],
+  "Anorthit": ["-1", [8.18, 12.88, 14.17, 93.2, 115.8, 91.2], [[0, 1, 0, 0.75], [1, 1, 0, 1], [1, -1, 0, 1], [0, 0, 1, 1.1], [-1, 0, 1, 1.25]]],
+  "Rhodonit": ["-1", [7.68, 11.82, 6.71, 92.4, 94.4, 105.7], [[1, 0, 0, 0.65], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1.2], [1, -1, 0, 1.2]]],
+  "Axinit": ["-1", [7.15, 9.16, 8.96, 91.8, 98.1, 77.3], [[0, 1, 0, 1], [1, 1, 0, 1], [1, -1, 0, 0.9], [1, 1, 1, 0.85], [-1, 1, 1, 1.1], [0, 0, 1, 1.2]]],
+};
+/* Ohne Kristallmodell: amorph, Gemenge oder praktisch nur dicht/nierig */
+const DERB = new Set(["Chalcedon", "Sepiolith", "Hydrozinkit", "Psilomelan", "Kryptomelan", "Türkis"]);
+
+/* Silikatklassen */
+const SIL_ZU = {
+  insel: ["Olivin", "Pyrop", "Almandin", "Spessartin", "Grossular", "Andradit", "Uwarowit", "Zirkon", "Andalusit", "Sillimanit", "Kyanit", "Topas", "Staurolith", "Titanit", "Sphen", "Chloritoid", "Willemit", "Phenakit", "Dumortierit"],
+  gruppe: ["Hemimorphit", "Epidot", "Zoisit", "Vesuvian", "Melilith", "Axinit"],
+  ring: ["Beryll", "Cordierit", "Turmalin", "Dioptas"],
+  kette: ["Augit", "Diopsid", "Hedenbergit", "Omphacit", "Ägirin", "Jadeit", "Spodumen", "Bronzit", "Hypersthen", "Wollastonit", "Rhodonit"],
+  band: ["Tremolit", "Aktinolith", "Hornblende", "Arfvedsonit"],
+  schicht: ["Talk", "Pyrophyllit", "Chlorit", "Kämmererit", "Muskovit", "Zinnwaldit", "Lepidolith", "Phlogopit", "Biotit", "Margarit", "Kaolinit", "Chrysotil", "Antigorit", "Sepiolith", "Apophyllit", "Prehnit", "Chrysokoll", "Petalit"],
+  geruest: ["Quarz", "Chalcedon", "Tridymit", "Cristobalit", "Sanidin", "Orthoklas", "Mikroklin", "Adular", "Albit", "Oligoklas", "Andesin", "Labradorit", "Bytownit", "Anorthit", "Nephelin", "Leucit", "Sodalith", "Hauyn", "Lasurit", "Skapolith", "Analcim", "Chabasit", "Phillipsit", "Harmotom", "Heulandit", "Stilbit", "Laumontit", "Natrolith"],
+};
+const SIL = {};
+Object.entries(SIL_ZU).forEach(([k, l]) => l.forEach(n => { SIL[n] = k; }));
+const SILIKAT = {
+  insel: { name: "Inselsilikat", fach: "Nesosilikat", einheit: "[SiO₄]⁴⁻", ecken: "keine", text: "Einzelne SiO₄-Tetraeder, nur über Kationen wie Fe, Mg, Zr oder Al miteinander verbunden." },
+  gruppe: { name: "Gruppensilikat", fach: "Sorosilikat", einheit: "[Si₂O₇]⁶⁻", ecken: "eine", text: "Je zwei Tetraeder teilen sich eine Ecke und bilden ein Doppeltetraeder." },
+  ring: { name: "Ringsilikat", fach: "Cyclosilikat", einheit: "[Si₆O₁₈]¹²⁻", ecken: "zwei", text: "Die Tetraeder schließen sich über je zwei Ecken zu Ringen, beim Beryll zu Sechserringen. Die übereinander gestapelten Ringe bilden Kanäle parallel zur c-Achse." },
+  kette: { name: "Kettensilikat", fach: "Inosilikat, Einfachkette", einheit: "[Si₂O₆]⁴⁻", ecken: "zwei", text: "Endlose Einfachketten wie bei den Pyroxenen. Die Ketten erklären die zwei Spaltrichtungen unter etwa 90°." },
+  band: { name: "Bandsilikat", fach: "Inosilikat, Doppelkette", einheit: "[Si₄O₁₁]⁶⁻", ecken: "zwei und drei", text: "Zwei Ketten sind zu einem Band verknüpft, typisch für die Amphibole. Die breiteren Bänder führen zum Spaltwinkel von etwa 120°." },
+  schicht: { name: "Schichtsilikat", fach: "Phyllosilikat", einheit: "[Si₄O₁₀]⁴⁻", ecken: "drei", text: "Die Tetraeder bilden ebene Schichten aus Sechserringen, alle Spitzen zeigen zur selben Seite. Daher die vollkommene Spaltbarkeit der Glimmer nach (001)." },
+  geruest: { name: "Gerüstsilikat", fach: "Tektosilikat", einheit: "[SiO₂]⁰, mit Al: [AlSi₃O₈]⁻", ecken: "alle vier", text: "Alle vier Ecken werden geteilt, es entsteht ein dreidimensionales Gerüst. In der Zeichnung zeigen die Spitzen abwechselnd nach oben und nach unten in die nächste Lage." },
+};
+const SIL_REIHE = ["insel", "gruppe", "ring", "kette", "band", "schicht", "geruest"];
+
+/* ---------- 2. Vektor- und Matrixrechnung ---------- */
+const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul = (s, a) => [s * a[0], s * a[1], s * a[2]];
+const len = a => Math.hypot(a[0], a[1], a[2]);
+const norm = a => mul(1 / len(a), a);
+const mv = (M, v) => [dot(M[0], v), dot(M[1], v), dot(M[2], v)];
+const mm = (A, B) => A.map(r => [0, 1, 2].map(j => r[0] * B[0][j] + r[1] * B[1][j] + r[2] * B[2][j]));
+const det = M => dot(M[0], cross(M[1], M[2]));
+const gleich = (A, B) => A.every((r, i) => r.every((x, j) => Math.abs(x - B[i][j]) < 1e-6));
+const E = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const neg = M => M.map(r => r.map(x => -x));
+const rad = Math.PI / 180;
+
+/* Kristallsystem aus der Punktgruppe */
+function sysVon(pg) {
+  if (/^(m-3m|-43m|432|m-3|23)$/.test(pg)) return "kub";
+  if (pg.includes("6") || pg.includes("3")) return "hex";
+  if (pg.includes("4")) return "tet";
+  if (/^(mmm|mm2|222)$/.test(pg)) return "ortho";
+  if (/^(2\/m|2|m)$/.test(pg)) return "mono";
+  return "tri";
+}
+/* Zelle aus der Kurzschreibweise der Formtabelle */
+function zelle(pg, z) {
+  const s = sysVon(pg);
+  if (s === "kub") return { a: 1, b: 1, c: 1 };
+  if (s === "hex") return { a: z[0], c: z[1], hex: true };
+  if (s === "tet") return { a: z[0], b: z[0], c: z[1] };
+  if (s === "ortho") return { a: z[0], b: z[1], c: z[2] };
+  if (s === "mono") return { a: z[0], b: z[1], c: z[2], be: z[3] };
+  return { a: z[0], b: z[1], c: z[2], al: z[3], be: z[4], ga: z[5] };
+}
+
+/* Gitterachsen als kartesische Vektoren, c senkrecht nach oben */
+function gitter(z) {
+  let A, B, C;
+  if (z.hex) {
+    A = [z.a, 0, 0]; B = [-z.a / 2, z.a * Math.sqrt(3) / 2, 0]; C = [0, 0, z.c];
+  } else {
+    const al = (z.al || 90) * rad, be = (z.be || 90) * rad, ga = (z.ga || 90) * rad;
+    C = [0, 0, z.c];
+    B = [0, z.b * Math.sin(al), z.b * Math.cos(al)];
+    const az = z.a * Math.cos(be), ay = z.a * (Math.cos(ga) - Math.cos(be) * Math.cos(al)) / Math.sin(al);
+    A = [Math.sqrt(z.a * z.a - ay * ay - az * az), ay, az];
+  }
+  const Vz = dot(A, cross(B, C));
+  return { As: mul(1 / Vz, cross(B, C)), Bs: mul(1 / Vz, cross(C, A)), Cs: mul(1 / Vz, cross(A, B)) };
+}
+
+/* Symmetrieoperationen: jede Klasse aus wenigen Erzeugenden aufgebaut */
+const Rz = n => { const t = 2 * Math.PI / n, c = Math.cos(t), s = Math.sin(t); return [[c, -s, 0], [s, c, 0], [0, 0, 1]]; };
+const R2x = [[1, 0, 0], [0, -1, 0], [0, 0, -1]], R2y = [[-1, 0, 0], [0, 1, 0], [0, 0, -1]];
+const INV = neg(E), Mx = [[-1, 0, 0], [0, 1, 0], [0, 0, 1]], My = [[1, 0, 0], [0, -1, 0], [0, 0, 1]];
+const R3d = [[0, 0, 1], [1, 0, 0], [0, 1, 0]];
+const S4 = mm(INV, Rz(4));
+const GEN = {
+  "1": [], "-1": [INV], "2": [R2y], "m": [My], "2/m": [R2y, INV],
+  "222": [R2x, R2y], "mm2": [Mx, My], "mmm": [R2x, R2y, INV],
+  "4": [Rz(4)], "-4": [S4], "4/m": [Rz(4), INV], "422": [Rz(4), R2x], "4mm": [Rz(4), Mx], "-42m": [S4, R2x], "4/mmm": [Rz(4), R2x, INV],
+  "3": [Rz(3)], "-3": [Rz(3), INV], "32": [Rz(3), R2x], "3m": [Rz(3), Mx], "-3m": [Rz(3), R2x, INV],
+  "6": [Rz(6)], "6/m": [Rz(6), INV], "622": [Rz(6), R2x], "6mm": [Rz(6), Mx], "6/mmm": [Rz(6), R2x, INV],
+  "23": [Rz(2), R2x, R3d], "m-3": [Rz(2), R2x, R3d, INV], "432": [R3d, Rz(4)], "-43m": [R3d, S4], "m-3m": [R3d, Rz(4), INV],
+};
+function gruppe(gen) {
+  const ops = [E];
+  for (let i = 0; i < ops.length; i++) for (const g of gen) {
+    const p = mm(g, ops[i]);
+    if (!ops.some(o => gleich(o, p))) ops.push(p);
+  }
+  return ops;
+}
+
+/* Formname aus Klasse, Indizes und Flächenzahl */
+function formName(pg, h, n) {
+  const s = sysVon(pg);
+  if (s === "kub") {
+    const t = h.map(Math.abs).sort((x, y) => y - x).join("");
+    return { "100": "Würfel", "111": n === 4 ? "Tetraeder" : "Oktaeder", "110": "Rhombendodekaeder",
+      "210": n === 12 ? "Pentagondodekaeder" : "Tetrakishexaeder", "211": n === 12 ? "Tristetraeder" : "Ikositetraeder",
+      "221": n === 12 ? "Deltoiddodekaeder" : "Triakisoktaeder" }[t] || "Hexakisoktaeder";
+  }
+  if (h[0] === 0 && h[1] === 0) return n === 1 ? "Pedion" : "Basispinakoid";
+  if (n === 1) return "Pedion";
+  if (n === 2) return pg === "mm2" && h[2] !== 0 ? "Doma" : "Pinakoid";
+  if (s === "mono" || s === "tri") return "Prisma";
+  if (h[2] === 0) return "Prisma";
+  if (s === "ortho") return pg === "mm2" ? (n === 2 ? "Doma" : "Pyramide") : pg === "222" ? "Disphenoid" : (h.includes(0) ? "Prisma" : "Dipyramide");
+  if (pg === "-42m" || pg === "-4") return n === 4 ? "Disphenoid" : "Skalenoeder";
+  if (/^(-3m|-3|32|3)$/.test(pg) && n === 6) return "Rhomboeder";
+  if (pg === "-3m" && n === 12) return h[0] !== h[1] && h[0] !== 0 && h[1] !== 0 && h[0] !== -h[1] ? "Skalenoeder" : "Dipyramide";
+  if (/^(3m|6mm|4mm|6|4|3)$/.test(pg)) return "Pyramide";
+  return "Dipyramide";
+}
+const millerText = (h, hex) => (hex ? [h[0], h[1], -(h[0] + h[1]), h[2]] : h).map(x => x < 0 ? Math.abs(x) + "̄" : String(x)).join("");
+const schoen = s => s.replace(/-(\d)/g, "$1̄");
+
+/* ---------- 3. Polyeder berechnen ----------
+   Jede Fläche ist eine Ebene n·x = d; der Kristall ist der Bereich innerhalb aller Ebenen.
+   Ecken = Schnittpunkte von je drei Ebenen, die keine andere Ebene verletzen. */
+function polyeder(spec) {
+  const [pg, z, formen] = spec;
+  const L = gitter(zelle(pg, z)), ops = gruppe(GEN[pg]);
+  const eb = [], fliste = [];
+  formen.forEach((fo, fi) => {
+    const n0 = norm(add(add(mul(fo[0], L.As), mul(fo[1], L.Bs)), mul(fo[2], L.Cs)));
+    let anz = 0;
+    const gesehen = [];
+    for (const op of ops) {
+      const n = mv(op, n0);
+      if (gesehen.some(g => len(sub(g, n)) < 1e-6)) continue;
+      gesehen.push(n); anz++;
+      const da = eb.find(e => len(sub(e.n, n)) < 1e-6);
+      if (!da) eb.push({ n, d: fo[3], fi }); else if (fo[3] < da.d) Object.assign(da, { d: fo[3], fi });
+    }
+    fliste.push({ name: fo[4] || formName(pg, fo.slice(0, 3), anz), hkl: millerText(fo.slice(0, 3), sysVon(pg) === "hex"), n: anz });
+  });
+  const pts = [];
+  for (let i = 0; i < eb.length; i++) for (let j = i + 1; j < eb.length; j++) {
+    const cij = cross(eb[i].n, eb[j].n);
+    for (let m = j + 1; m < eb.length; m++) {
+      const D = dot(eb[m].n, cij);
+      if (Math.abs(D) < 1e-9) continue;
+      const x = mul(1 / D, add(add(mul(eb[i].d, cross(eb[j].n, eb[m].n)), mul(eb[j].d, cross(eb[m].n, eb[i].n))), mul(eb[m].d, cij)));
+      if (eb.some(e => dot(e.n, x) > e.d + 1e-7)) continue;
+      if (!pts.some(p => len(sub(p, x)) < 1e-6)) pts.push(x);
+    }
+  }
+  const c = mul(1 / pts.length, pts.reduce(add, [0, 0, 0]));
+  let v = pts.map(p => sub(p, c));
+  const R = Math.max(...v.map(len));
+  v = v.map(p => mul(1 / R, p));
+  const f = [];
+  eb.forEach(e => {
+    const d = (e.d - dot(e.n, c)) / R;
+    const idx = v.map((p, i) => Math.abs(dot(e.n, p) - d) < 1e-6 ? i : -1).filter(i => i >= 0);
+    if (idx.length < 3) return;
+    const m = mul(1 / idx.length, idx.map(i => v[i]).reduce(add, [0, 0, 0]));
+    const u = norm(sub(v[idx[0]], m)), w = cross(e.n, u);
+    idx.sort((a, b) => Math.atan2(dot(sub(v[a], m), w), dot(sub(v[a], m), u)) - Math.atan2(dot(sub(v[b], m), w), dot(sub(v[b], m), u)));
+    f.push({ n: e.n, d, fi: e.fi, v: idx });
+  });
+  const kanten = new Map();
+  f.forEach((fl, fi) => fl.v.forEach((a, i) => {
+    const b = fl.v[(i + 1) % fl.v.length], key = a < b ? a + "-" + b : b + "-" + a;
+    if (!kanten.has(key)) kanten.set(key, { a: Math.min(a, b), b: Math.max(a, b), f: [] });
+    kanten.get(key).f.push(fi);
+  }));
+  const da = new Set(f.map(x => x.fi));               // nur Formen, die am Modell wirklich vorkommen
+  return { pg, v, f, k: [...kanten.values()], formen: fliste.filter((_, i) => da.has(i)), sym: symmetrie(ops) };
+}
+
+/* ---------- 4. Symmetrieelemente ablesen ---------- */
+function achseVon(R) {
+  const v = [R[2][1] - R[1][2], R[0][2] - R[2][0], R[1][0] - R[0][1]];
+  if (len(v) > 1e-6) return norm(v);
+  const S = R.map((r, i) => r.map((x, j) => x + E[i][j]));
+  const cols = [0, 1, 2].map(j => [S[0][j], S[1][j], S[2][j]]);
+  return norm(cols.reduce((a, b) => len(b) > len(a) ? b : a));
+}
+function symmetrie(ops) {
+  const achsen = [], spiegel = []; let inv = false;
+  const merke = (u, n, roto) => {
+    let a = achsen.find(x => Math.abs(dot(x.u, u)) > 0.9999);
+    if (!a) { a = { u, n: 1, roto: 0 }; achsen.push(a); }
+    if (roto) a.roto = Math.max(a.roto, n); else a.n = Math.max(a.n, n);
+  };
+  for (const R of ops) {
+    const P = det(R) > 0 ? R : neg(R), tr = P[0][0] + P[1][1] + P[2][2];
+    if (tr > 2.999) { if (det(R) < 0) inv = true; continue; }
+    const n = Math.round(2 * Math.PI / Math.acos(Math.max(-1, Math.min(1, (tr - 1) / 2))));
+    const u = achseVon(P);
+    if (det(R) > 0) merke(u, n, false);
+    else if (n === 2) { if (!spiegel.some(s => Math.abs(dot(s, u)) > 0.9999)) spiegel.push(u); }
+    else merke(u, n, true);
+  }
+  achsen.forEach(a => {
+    a.sym = String(a.n);
+    if (a.roto === 4 && a.n < 4) a.sym = "-4";
+    else if (a.n === 3 && inv) a.sym = "-3";
+    else if (a.n === 3 && a.roto === 6) a.sym = "-6";
+  });
+  return { achsen: achsen.filter(a => a.n > 1 || a.roto > 2), spiegel, inv };
+}
+const SYMNAME = { "2": ["zweizählige Drehachse", "zweizählige Drehachsen"], "3": ["dreizählige Drehachse", "dreizählige Drehachsen"],
+  "4": ["vierzählige Drehachse", "vierzählige Drehachsen"], "6": ["sechszählige Drehachse", "sechszählige Drehachsen"],
+  "-3": ["dreizählige Drehinversionsachse (3̄)", "dreizählige Drehinversionsachsen (3̄)"],
+  "-4": ["vierzählige Drehinversionsachse (4̄)", "vierzählige Drehinversionsachsen (4̄)"],
+  "-6": ["sechszählige Drehinversionsachse (6̄)", "sechszählige Drehinversionsachsen (6̄)"] };
+const ZAHL = ["keine", "eine", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"];
+function symText(s) {
+  const t = ["6", "-6", "4", "-4", "3", "-3", "2"].map(k => {
+    const n = s.achsen.filter(a => a.sym === k).length;
+    return n ? `${ZAHL[n] || n} ${SYMNAME[k][n === 1 ? 0 : 1]}` : "";
+  }).filter(Boolean);
+  if (s.spiegel.length) t.push(`${ZAHL[s.spiegel.length] || s.spiegel.length} ${s.spiegel.length === 1 ? "Spiegelebene" : "Spiegelebenen"}`);
+  t.push(s.inv ? "ein Symmetriezentrum" : "kein Symmetriezentrum");
+  const x = t.join(", ");
+  return x.charAt(0).toUpperCase() + x.slice(1) + ".";
+}
+
+/* ---------- 5. Zeichnen ---------- */
+const Rx = t => [[1, 0, 0], [0, Math.cos(t), -Math.sin(t)], [0, Math.sin(t), Math.cos(t)]];
+const Ry = t => [[Math.cos(t), 0, Math.sin(t)], [0, 1, 0], [-Math.sin(t), 0, Math.cos(t)]];
+const M0 = [[0, 1, 0], [0, 0, 1], [1, 0, 0]];             // c nach oben, a zum Betrachter
+const START = mm(Rx(10 * rad), mm(Ry(-20 * rad), M0));    // klassische Lehrbuch-Ansicht
+const LICHT = norm([-0.5, 0.65, 0.6]);
+const FARBE = { "2": "#2f8a62", "3": "#b8862b", "-3": "#b8862b", "4": "#2c55a3", "-4": "#2c55a3", "6": "#b23a2e", "-6": "#b23a2e" };
+const SPIEGEL = "#7b4fb0";
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const rgb = h => { const x = parseInt(h.replace("#", ""), 16); return [x >> 16 & 255, x >> 8 & 255, x & 255]; };
+const mix = (a, b, t) => `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(",")})`;
+const f1 = x => x.toFixed(1);
+let farben = null;                                           // aktuelle Themenfarben (hell/dunkel)
+function themenFarben() { farben = { ink: css("--ink") || "#1c2427", hell: rgb(css("--m-hell") || "#ffffff"), schatten: rgb(css("--m-schatten") || "#b9c3c1") }; }
+
+/* Holzmaserung: einmal als wiederholbares Bild erzeugt */
+function maserung() {
+  const cv = document.createElement("canvas"); cv.width = cv.height = 256;
+  const g = cv.getContext("2d"), img = g.createImageData(256, 256), T = 2 * Math.PI / 256;
+  for (let y = 0; y < 256; y++) {
+    const off = 9 * Math.sin(T * 2 * y + 1.3) + 4 * Math.sin(T * 5 * y + 0.4) + 2 * Math.sin(T * 11 * y);
+    for (let x = 0; x < 256; x++) {
+      const t = T * (x + off);
+      const ring = 0.5 + 0.5 * Math.sin(6 * t + 1.6 * Math.sin(3 * t + 0.7) + 0.6 * Math.sin(T * 3 * y));
+      const fein = 0.5 + 0.5 * Math.sin(47 * t + 2 * Math.sin(T * 7 * y));
+      const o = (y * 256 + x) * 4;
+      img.data[o] = 92; img.data[o + 1] = 52; img.data[o + 2] = 22; img.data[o + 3] = Math.pow(ring, 5) * 95 + fein * 16;
+    }
+  }
+  g.putImageData(img, 0, 0);
+  const el = document.getElementById("maser-bild"), url = cv.toDataURL();
+  el.setAttribute("href", url); el.setAttributeNS("http://www.w3.org/1999/xlink", "href", url);
+}
+
+function symbol(x, y, sym, r) {
+  const c = FARBE[sym], n = Math.abs(+sym), roto = sym.startsWith("-");
+  let s;
+  if (n === 2) s = `<ellipse cx="${f1(x)}" cy="${f1(y)}" rx="${r * 1.15}" ry="${r * 0.6}" fill="${c}" stroke="#fff" stroke-width="1"/>`;
+  else {
+    const p = [...Array(n)].map((_, i) => { const t = (n === 4 ? -Math.PI / 4 : -Math.PI / 2) + i * 2 * Math.PI / n; return `${f1(x + r * Math.cos(t))},${f1(y + r * Math.sin(t))}`; }).join(" ");
+    s = `<polygon points="${p}" fill="${c}" stroke="#fff" stroke-width="1"/>`;
+  }
+  if (roto) s += n === 4 ? `<ellipse cx="${f1(x)}" cy="${f1(y)}" rx="${r * 0.55}" ry="${r * 0.3}" fill="#fff"/>` : `<circle cx="${f1(x)}" cy="${f1(y + (n === 3 ? r * 0.15 : 0))}" r="${r * 0.3}" fill="#fff"/>`;
+  return s;
+}
+
+/* Polyeder als SVG-Inhalt. o: { stil, R (Blickrichtung), W (Größe), fit, sym, uid } */
+function svgPolyeder(P, o) {
+  const W = o.W, R = o.R, holz = o.stil === "holz", uid = o.uid;
+  const pv = P.v.map(v => mv(R, v));
+  let s, cx = W / 2, cy = W / 2;
+  if (o.fit) {
+    const xs = pv.map(p => p[0]), ys = pv.map(p => p[1]);
+    const w = Math.max(...xs) - Math.min(...xs), h = Math.max(...ys) - Math.min(...ys);
+    s = 0.9 * W / Math.max(w, h);
+    cx = W / 2 - s * (Math.max(...xs) + Math.min(...xs)) / 2; cy = W / 2 + s * (Math.max(...ys) + Math.min(...ys)) / 2;
+  } else s = W / 2 / (o.sym ? 1.42 : 1.1);
+  const X = p => [cx + s * p[0], cy - s * p[1]];
+  const XS = p => { const q = X(p); return `${f1(q[0])},${f1(q[1])}`; };
+  const { ink, hell, schatten } = farben;
+  const lw = o.fit ? 1.1 : 1.6, ns = o.fit ? ` vector-effect="non-scaling-stroke"` : "";
+  const nv = P.f.map(f => mv(R, f.n)), vorne = nv.map(n => n[2] > 1e-9);
+  const symAn = o.sym && (o.sym.achsen || o.sym.spiegel || o.sym.zentrum);
+  const deck = symAn ? (holz ? 0.62 : 0.55) : 1;
+  let defs = "", hinten = "", mitte = "", flaechen = "", oben = "";
+  if (!holz) P.k.forEach(k => {          // verdeckte Kanten gestrichelt
+    if (vorne[k.f[0]] || vorne[k.f[1]]) return;
+    const a = X(pv[k.a]), b = X(pv[k.b]);
+    hinten += `<line x1="${f1(a[0])}" y1="${f1(a[1])}" x2="${f1(b[0])}" y2="${f1(b[1])}" stroke="${ink}" stroke-opacity=".5" stroke-width="${lw * 0.7}" stroke-dasharray="3 2.5"${ns}/>`;
+  });
+  P.f.forEach((f, i) => {
+    if (!vorne[i]) return;
+    const I = Math.max(0, dot(nv[i], LICHT)), pts = f.v.map(j => XS(pv[j])).join(" ");
+    if (holz) {
+      const fill = mix([132, 82, 42], [232, 188, 132], 0.15 + 0.85 * I);
+      let g = sub([0, 0, 1], mul(f.n[2], f.n));           // Maserung entlang der c-Achse
+      if (len(g) < 0.2) g = sub([1, 0, 0], mul(f.n[0], f.n));
+      const gv = mv(R, g), ang = Math.atan2(-gv[1], gv[0]) / rad + 90, id = `${uid}-${i}`;
+      defs += `<pattern id="${id}" href="#maser" xlink:href="#maser" patternTransform="rotate(${f1(ang)}) scale(${o.fit ? 0.6 : 1.2})"/>`;
+      flaechen += `<g opacity="${deck}"><polygon points="${pts}" fill="${fill}"/><polygon points="${pts}" fill="url(#${id})" style="mix-blend-mode:multiply" opacity=".75"/><polygon points="${pts}" fill="none" stroke="rgb(70,40,18)" stroke-opacity=".55" stroke-width="${lw * 0.7}" stroke-linejoin="round"${ns}/></g>`;
+    } else {
+      flaechen += `<polygon points="${pts}" fill="${mix(schatten, hell, 0.25 + 0.75 * I)}" fill-opacity="${deck}" stroke="${ink}" stroke-width="${lw}" stroke-linejoin="round"${ns}/>`;
+    }
+  });
+  if (o.sym) {
+    const SY = P.sym;
+    if (o.sym.spiegel) SY.spiegel.forEach(m => {
+      const q = [];
+      P.k.forEach(k => {
+        const a = P.v[k.a], b = P.v[k.b], sa = dot(m, a), sb = dot(m, b);
+        if (Math.abs(sa) < 1e-7) q.push(a);
+        if (Math.abs(sb) < 1e-7) q.push(b);
+        if (sa * sb < -1e-14) q.push(add(a, mul(sa / (sa - sb), sub(b, a))));
+      });
+      const u = [];
+      q.forEach(p => { if (!u.some(x => len(sub(x, p)) < 1e-6)) u.push(p); });
+      if (u.length < 3) return;
+      const e1 = norm(sub(u[0], mul(dot(u[0], m), m))), e2 = cross(m, e1);
+      u.sort((a, b) => Math.atan2(dot(a, e2), dot(a, e1)) - Math.atan2(dot(b, e2), dot(b, e1)));
+      mitte += `<polygon points="${u.map(p => XS(mv(R, p))).join(" ")}" fill="${SPIEGEL}" fill-opacity=".14" stroke="${SPIEGEL}" stroke-width="1.2" stroke-opacity=".8" stroke-linejoin="round"/>`;
+    });
+    if (o.sym.achsen) SY.achsen.forEach(a => [1, -1].forEach(sg => {
+      const u = mul(sg, a.u);
+      let t = Infinity;
+      P.f.forEach(f => { const c = dot(f.n, u); if (c > 1e-9) t = Math.min(t, f.d / c); });
+      const end = mv(R, mul(t + 0.3, u)), O = X([0, 0, 0]), e = X(end);
+      const line = `<line x1="${f1(O[0])}" y1="${f1(O[1])}" x2="${f1(e[0])}" y2="${f1(e[1])}" stroke="${FARBE[a.sym]}" stroke-width="2.2" stroke-linecap="round"/>` + symbol(e[0], e[1], a.sym, 8);
+      if (end[2] < 0) hinten += line; else oben += line;
+    }));
+    if (o.sym.zentrum && SY.inv) { const O = X([0, 0, 0]); oben += `<circle cx="${f1(O[0])}" cy="${f1(O[1])}" r="5" fill="#fff" stroke="${ink}" stroke-width="2"/>`; }
+  }
+  return `<defs>${defs}</defs>${hinten}${mitte}${flaechen}${oben}`;
+}
+
+/* Platzhalter für Minerale ohne Kristallform: nierig-traubige Kugeln */
+function svgDerb(stil, W, uid) {
+  const holz = stil === "holz", { ink } = farben;
+  const k = [[0.36, 0.6, 0.2], [0.58, 0.62, 0.22], [0.47, 0.42, 0.21], [0.7, 0.44, 0.16], [0.27, 0.4, 0.15], [0.5, 0.75, 0.15]].sort((a, b) => a[1] - b[1]);
+  const g = holz ? `<radialGradient id="${uid}" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#ecc591"/><stop offset="1" stop-color="#8a5228"/></radialGradient>`
+    : `<radialGradient id="${uid}" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="${mix(farben.hell, farben.hell, 0)}"/><stop offset="1" stop-color="${mix(farben.schatten, farben.schatten, 0)}"/></radialGradient>`;
+  return `<defs>${g}</defs>` + k.map(([x, y, r]) => `<circle cx="${f1(x * W)}" cy="${f1(y * W)}" r="${f1(r * W)}" fill="url(#${uid})" stroke="${holz ? "rgba(70,40,18,.5)" : ink}" stroke-width="${W > 200 ? 1.6 : 1.1}" vector-effect="non-scaling-stroke"/>`).join("");
+}
+
+/* ---------- 6. Silikatschema (Tetraeder von oben, Kagome-Netz) ---------- */
+function kagome(nx, ny) {
+  const a = Math.sqrt(3), t = [];
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+    const y0 = 6 * j;
+    t.push({ x: 2 * a * i, y: y0, up: true }, { x: a + 2 * a * i, y: y0 + 1, up: false },
+      { x: a + 2 * a * i, y: y0 + 3, up: true }, { x: 2 * a * i, y: y0 + 4, up: false });
+  }
+  return t;
+}
+function silTetraeder(typ) {
+  const a = Math.sqrt(3);
+  if (typ === "insel") return [{ x: 0, y: 0, up: true }, { x: 3.2 * a, y: 0.8, up: false }, { x: 1.5 * a, y: 3.6, up: false }, { x: 4.8 * a, y: 3.8, up: true }, { x: 6.6 * a, y: 0.6, up: true }];
+  if (typ === "gruppe") { const p = [{ x: 0, y: 0, up: true }, { x: a, y: 1, up: false }]; return [...p, ...p.map(q => ({ ...q, x: q.x + 3.4 * a, y: q.y + 2.6 })), ...p.map(q => ({ ...q, x: q.x + 6.6 * a, y: q.y - 0.2 }))]; }
+  if (typ === "ring") return kagome(3, 2).filter(t => Math.abs(Math.hypot(t.x - 2 * a, t.y - 2) - 2) < 1e-6);
+  if (typ === "kette") return kagome(5, 1).filter(t => t.y < 2);
+  if (typ === "band") return kagome(5, 1);
+  if (typ === "schicht") return kagome(4, 2).filter(t => t.y < 8 && t.x < 7.5 * a);
+  if (typ === "geruest") return kagome(4, 2).filter(t => t.y < 8 && t.x < 7.5 * a).map(t => ({ ...t, unten: !t.up }));
+  return [];
+}
+function svgSilikat(typ, stil) {
+  const holz = stil === "holz", { ink, hell, schatten } = farben;
+  const T = silTetraeder(typ);
+  const ecken = t => [0, 1, 2].map(i => { const w = ((t.up ? -90 : 90) + i * 120) * rad; return [t.x + Math.cos(w), t.y + Math.sin(w)]; });
+  const allE = T.flatMap(ecken), xs = allE.map(p => p[0]), ys = allE.map(p => p[1]);
+  const x0 = Math.min(...xs), y0 = Math.min(...ys), SK = 34, pad = 14;
+  const W = (Math.max(...xs) - x0) * SK + 2 * pad, H = (Math.max(...ys) - y0) * SK + 2 * pad;
+  const P = p => `${f1((p[0] - x0) * SK + pad)},${f1((p[1] - y0) * SK + pad)}`;
+  const strich = holz ? "rgba(70,40,18,.75)" : ink, licht = -135 * rad;
+  let out = "";
+  T.forEach(t => {
+    const e = ecken(t), c = [t.x, t.y];
+    if (t.unten) {
+      out += `<polygon points="${e.map(P).join(" ")}" fill="${holz ? "rgb(176,122,72)" : mix(schatten, hell, 0.55)}" stroke="${strich}" stroke-width="1.3" stroke-linejoin="round"/>`;
+      const [px, py] = P(c).split(","); out += `<circle cx="${px}" cy="${py}" r="2.4" fill="${strich}"/>`;
+    } else {
+      [0, 1, 2].forEach(i => {
+        const p1 = e[i], p2 = e[(i + 1) % 3], mx = (p1[0] + p2[0]) / 2 - c[0], my = (p1[1] + p2[1]) / 2 - c[1];
+        const I = 0.5 + 0.5 * Math.cos(Math.atan2(my, mx) - licht);
+        out += `<polygon points="${P(c)} ${P(p1)} ${P(p2)}" fill="${holz ? mix([132, 82, 42], [236, 194, 140], I) : mix(schatten, hell, 0.2 + 0.8 * I)}" stroke="${strich}" stroke-width="1" stroke-linejoin="round"/>`;
+      });
+      out += `<polygon points="${e.map(P).join(" ")}" fill="none" stroke="${strich}" stroke-width="1.5" stroke-linejoin="round"/>`;
+    }
+  });
+  const zaehl = new Map();
+  allE.forEach(p => { const k = p[0].toFixed(3) + "," + p[1].toFixed(3); zaehl.set(k, (zaehl.get(k) || 0) + 1); });
+  zaehl.forEach((n, k) => { if (n > 1) { const [px, py] = P(k.split(",").map(Number)).split(","); out += `<circle cx="${px}" cy="${py}" r="3.6" fill="#b23a2e" stroke="#fff" stroke-width="1"/>`; } });
+  return `<svg viewBox="0 0 ${Math.round(W)} ${Math.round(H)}" role="img" aria-label="Schema ${SILIKAT[typ].name}">${out}</svg>`;
+}
+
+/* ---------- 7. Anbindung an die App ---------- */
+let stil = "holz";
+try { stil = localStorage.getItem("mb-modellstil") || "holz"; } catch (e) {}
+const cache = new Map();          // Polyeder je Mineral
+const thumbs = new Map();         // fertige Vorschaubilder je Mineral und Stil
+const zustand = new Map();        // offene Detailansichten: Blickrichtung, Animation, Silikatvergleich
+const symAn = { achsen: true, spiegel: false, zentrum: true };
+const san = s => s.replace(/[^a-zA-Z0-9]/g, c => "_" + c.charCodeAt(0));
+
+const istDerb = r => DERB.has(r.name) || /^–/.test(r.system) || /amorph/.test(r.system) || !KR[r.name];
+function poly(r) {
+  if (istDerb(r)) return null;
+  if (!cache.has(r.name)) cache.set(r.name, polyeder(KR[r.name]));
+  return cache.get(r.name);
+}
+function thumb(r) {
+  if (!farben) themenFarben();
+  const P = poly(r), key = r.name + "|" + (P ? "k" : "d") + "|" + stil;
+  if (!thumbs.has(key)) {
+    const uid = "t" + san(r.name);
+    thumbs.set(key, `<svg viewBox="0 0 132 132" aria-hidden="true">${P ? svgPolyeder(P, { stil, R: START, W: 132, fit: true, uid }) : svgDerb(stil, 132, uid + "d")}</svg>`);
+  }
+  return thumbs.get(key);
+}
+function caption(r) {
+  const P = poly(r);
+  const t = P ? `${r.sys.join(" / ") || ""} · <b>${schoen(P.pg)}</b>` : (r.sys.includes("amorph") ? "amorph" : "derb, nierig");
+  return t + (SIL[r.name] ? `<span class="km-silchip">${SILIKAT[SIL[r.name]].name}</span>` : "");
+}
+
+/* Detailblock für eine aufgeklappte Zeile */
+function html(r) {
+  const P = poly(r), sil = SIL[r.name];
+  if (!zustand.has(r.i)) zustand.set(r.i, { R: START, dreh: false, silTyp: sil || null });
+  const Z = zustand.get(r.i);
+  const formen = P ? P.formen.map(f => `${f.name} <span class="km-mono">{${f.hkl}}</span>`).join(" · ") : "";
+  return `<div class="kristall" data-km="${r.i}">
+    <div class="km-links">
+      <div class="buehne"><svg class="km-gross" viewBox="0 0 400 400" role="img" aria-label="Kristallmodell ${esc(r.name)}${P ? ", drehbar" : ""}" tabindex="0"></svg>
+        ${P ? `<span class="tipp">Ziehen zum Drehen</span>` : ""}</div>
+      ${P ? `<div class="km-steuer">
+        <button type="button" class="chip" data-km-sym="achsen">Drehachsen</button>
+        <button type="button" class="chip" data-km-sym="spiegel"${P.sym.spiegel.length ? "" : " disabled"}>Spiegelebenen</button>
+        <button type="button" class="chip" data-km-sym="zentrum"${P.sym.inv ? "" : " disabled"}>Symmetriezentrum</button>
+        <button type="button" class="chip" data-km-dreh>Langsam drehen</button>
+        <button type="button" class="chip" data-km-reset>Ausgangsansicht</button></div>
+      <div class="km-legende"></div>` : ""}
+    </div>
+    <div class="km-info">
+      <div><div class="km-h">Kristallmodell</div>
+        ${P ? `<p class="km-p"><b>Klasse ${schoen(P.pg)}</b> · Idealform: ${formen}</p>
+          <p class="km-p">${symText(P.sym)}</p>
+          <p class="km-klein">Aus Kristallklasse und typischer Tracht berechnet. In der Natur sind die Flächen meist ungleich groß entwickelt.</p>`
+        : `<p class="km-p">${r.sys.includes("amorph") ? "Amorph: keine Kristallform und keine Symmetrie." : "Meist dicht, nierig oder als Gemenge – keine typische Kristallform."} Gezeigt ist eine nierig-traubige Ausbildung.</p>`}
+      </div>
+      ${sil ? `<div class="km-sil"></div>` : ""}
+    </div>
+  </div>`;
+}
+function zeichneSil(box, r, Z) {
+  const t = Z.silTyp, S = SILIKAT[t], eigen = t === SIL[r.name];
+  box.innerHTML = `<div class="km-h">Silikatstruktur</div>
+    <div class="km-silkopf"><b>${S.name}</b><span>${S.fach}</span><span class="km-mono">${S.einheit}</span></div>
+    <div class="km-schema">${svgSilikat(t, stil)}</div>
+    <p class="km-klein">${S.text} Gemeinsame Ecken je Tetraeder: ${S.ecken}${t === "insel" ? "" : " (rote Punkte)"}.${eigen ? "" : ` Zum Vergleich – ${esc(r.name)} ist ein ${SILIKAT[SIL[r.name]].name}.`}</p>
+    <div class="km-reihe" role="group" aria-label="Silikatklassen vergleichen">${SIL_REIHE.map(k => `<button type="button" data-km-sil="${k}" aria-current="${k === t}">${SILIKAT[k].name.replace("silikat", "")}</button>`).join("")}</div>`;
+}
+function zeichneGross(el) {
+  const i = +el.dataset.km, r = rows[i], P = poly(r), Z = zustand.get(i), svg = el.querySelector(".km-gross");
+  if (!farben) themenFarben();
+  if (P) {
+    svg.innerHTML = svgPolyeder(P, { stil, R: Z.R, W: 400, sym: symAn, uid: "g" + i });
+    el.querySelectorAll("[data-km-sym]").forEach(b => b.setAttribute("aria-pressed", symAn[b.dataset.kmSym] && !b.disabled ? "true" : "false"));
+    el.querySelector("[data-km-dreh]").setAttribute("aria-pressed", Z.dreh ? "true" : "false");
+    const typen = [...new Set(P.sym.achsen.map(a => a.sym))].sort((a, b) => Math.abs(b) - Math.abs(a));
+    const leg = [];
+    if (symAn.achsen) typen.forEach(t => leg.push(`<span><svg viewBox="0 0 16 16">${symbol(8, 8, t, 6.5)}</svg>${t.startsWith("-") ? schoen(t) + " Drehinversionsachse" : t + "-zählige Drehachse"}</span>`));
+    if (symAn.spiegel && P.sym.spiegel.length) leg.push(`<span><svg viewBox="0 0 16 16"><rect x="1" y="4" width="14" height="8" fill="${SPIEGEL}" fill-opacity=".25" stroke="${SPIEGEL}"/></svg>Spiegelebene</span>`);
+    if (symAn.zentrum && P.sym.inv) leg.push(`<span><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="4.5" fill="#fff" stroke="currentColor" stroke-width="2"/></svg>Symmetriezentrum</span>`);
+    el.querySelector(".km-legende").innerHTML = leg.join("");
+  } else svg.innerHTML = svgDerb(stil, 400, "gd" + i);
+  const box = el.querySelector(".km-sil");
+  if (box && !box.dataset.fertig) { zeichneSil(box, r, Z); box.dataset.fertig = "1"; }
+}
+function zeichneOffene() { document.querySelectorAll(".kristall").forEach(el => zeichneGross(el)); }
+function alleNeu() { themenFarben(); thumbs.clear(); }
+
+/* Drehen mit Maus, Finger oder Pfeiltasten; Schalter */
+function binde(liste) {
+  let zug = null;
+  liste.addEventListener("pointerdown", e => {
+    const svg = e.target.closest(".km-gross"); if (!svg) return;
+    const el = svg.closest(".kristall"), i = +el.dataset.km;
+    if (!poly(rows[i])) return;
+    zug = { el, i, x: e.clientX, y: e.clientY };
+    zustand.get(i).dreh = false;
+    try { svg.setPointerCapture(e.pointerId); } catch (x) {}
+  });
+  liste.addEventListener("pointermove", e => {
+    if (!zug) return;
+    const Z = zustand.get(zug.i), k = 3.2 / (zug.el.querySelector(".km-gross").getBoundingClientRect().width || 300);
+    const dx = e.clientX - zug.x, dy = e.clientY - zug.y; zug.x = e.clientX; zug.y = e.clientY;
+    Z.R = mm(Ry(dx * k), mm(Rx(dy * k), Z.R)); zeichneGross(zug.el);
+  });
+  const ende = () => { zug = null; };
+  liste.addEventListener("pointerup", ende); liste.addEventListener("pointercancel", ende);
+  liste.addEventListener("keydown", e => {
+    const svg = e.target.closest && e.target.closest(".km-gross"); if (!svg) return;
+    const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]; if (!d) return;
+    e.preventDefault(); e.stopPropagation();
+    const el = svg.closest(".kristall"), Z = zustand.get(+el.dataset.km);
+    Z.R = mm(Ry(d[0] * 0.15), mm(Rx(d[1] * 0.15), Z.R)); zeichneGross(el);
+  });
+  liste.addEventListener("click", e => {
+    const el = e.target.closest(".kristall"); if (!el) return;
+    const i = +el.dataset.km, Z = zustand.get(i);
+    const s = e.target.closest("[data-km-sym]");
+    if (s && !s.disabled) { symAn[s.dataset.kmSym] = !symAn[s.dataset.kmSym]; zeichneOffene(); return; }
+    if (e.target.closest("[data-km-reset]")) { Z.R = START; Z.dreh = false; zeichneGross(el); return; }
+    if (e.target.closest("[data-km-dreh]")) { Z.dreh = !Z.dreh; zeichneGross(el); if (Z.dreh) drehe(i); return; }
+    const b = e.target.closest("[data-km-sil]");
+    if (b) { Z.silTyp = b.dataset.kmSil; zeichneSil(el.querySelector(".km-sil"), rows[i], Z); }
+  });
+}
+function drehe(i) {
+  let last = performance.now();
+  const step = t => {
+    const Z = zustand.get(i), el = [...document.querySelectorAll(`.kristall[data-km="${i}"]`)].find(x => x.offsetParent);
+    if (!Z || !Z.dreh || !el || !el.offsetParent) { if (Z) Z.dreh = false; return; }
+    Z.R = mm(Ry((t - last) * 0.0005), Z.R); last = t; zeichneGross(el);
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function setzeStil(s, neuZeichnen) {
+  stil = s;
+  try { localStorage.setItem("mb-modellstil", s); } catch (e) {}
+  document.querySelectorAll("[data-km-stil]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kmStil === s ? "true" : "false"));
+  if (neuZeichnen) neuZeichnen();
+}
+function start(neuZeichnen) {
+  maserung(); themenFarben();
+  document.querySelectorAll("[data-km-stil]").forEach(b => b.addEventListener("click", () => setzeStil(b.dataset.kmStil, neuZeichnen)));
+  setzeStil(stil);
+  const neu = () => { alleNeu(); neuZeichnen(); };
+  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", neu); } catch (e) {}
+  const themaBeobachter = new MutationObserver(neu);
+  themaBeobachter.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  ["list", "klist"].forEach(id => {
+    const l = document.getElementById(id);
+    binde(l);
+    const listenBeobachter = new MutationObserver(zeichneOffene);
+    listenBeobachter.observe(l, { childList: true });
+  });
+}
+return { thumb, caption, html, start, zeichneOffene, KR, SIL, poly, istDerb };
+})();
 
 /* ---------- Ansichten ---------- */
 function setView(v) {
@@ -719,5 +1590,6 @@ $("tab-tabelle").addEventListener("click", () => setView("tabelle"));
 if (window.matchMedia("(max-width: 900px)").matches) $("pult").open = false;
 let startView = location.hash === "#tabelle" ? "tabelle" : location.hash === "#schluessel" ? "schluessel" : null;
 if (!startView) { try { startView = localStorage.getItem("mb-view"); } catch (e) {} }
+KM.start(rerender);
 setView(startView || "schluessel");
 </script>

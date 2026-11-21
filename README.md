@@ -10,6 +10,8 @@ Interaktive Mineralbestimmung nach äußeren Kennzeichen – im Browser, ohne In
 
 - **Geführt bestimmen:** Schritt für Schritt durch den Bestimmungsschlüssel (Glanz → Strich → Härte → Spaltbarkeit), mit Praxistipps zu Strichtafel und Ritzprobe, Trefferzahlen vor jeder Antwort, „nicht sicher“ für Grenzfälle und Hinweisen auf Nachbartabellen.
 - **Alle Tabellen:** alle 283 Einträge (231 Mineralien) filterbar nach Glanz, Strichfarbe, Mohs-Härte, Spaltbarkeit, Dichte, Glanzart, Kristallsystem und Tabelle, mit Freitextsuche.
+- **Kristallmodelle:** zu jedem Mineral ein aus Kristallklasse und typischer Tracht berechnetes Modell der Idealform – klein in der Liste, aufgeklappt groß und drehbar, mit einblendbaren Drehachsen, Spiegelebenen und Symmetriezentrum. Darstellung umschaltbar zwischen Holzmodell und Lehrbuchzeichnung.
+- **Silikatstrukturen:** bei Silikaten ein Schema der SiO₄-Tetraeder-Verknüpfung (Insel-, Gruppen-, Ring-, Ketten-, Band-, Schicht-, Gerüstsilikat) mit Vergleich aller sieben Klassen.
 - Jeder Mineralname verlinkt auf die passende Seite bei [mindat.org](https://www.mindat.org).
 - Funktioniert am Rechner und auf dem Handy, im hellen und dunklen Modus.
 
@@ -28,7 +30,7 @@ Die Tabellen wurden von Hand aus dem gescannten Original übertragen. Stellen mi
 | `daten/Mineralbestimmungstabellen_TU_Berlin.csv` | alle Einträge als CSV (Semikolon, UTF-8) mit Zahlenspalten für Härte und Dichte sowie mindat-Links |
 | `quellen/mineral_daten.txt` | die Transkription, Grundlage für alles andere |
 | `quellen/mindat_ids.py` | Zuordnung der deutschen Namen zu mindat-Seiten |
-| `quellen/template.html` | Seitenvorlage (Gestaltung und Logik) |
+| `quellen/template.html` | Seitenvorlage (Gestaltung und Logik); die Formtabelle der Kristallmodelle (`KR`) und die Silikatzuordnung (`SIL_ZU`) stehen im Abschnitt „Kristallmodelle und Silikatstrukturen“ |
 | `quellen/parse.py`, `quellen/build.py` | Skripte zum Neubau |
 
 ## App neu bauen
