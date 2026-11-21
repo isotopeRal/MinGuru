@@ -9,6 +9,7 @@ Interaktive Mineralbestimmung nach äußeren Kennzeichen – im Browser, ohne In
 ## Was die App kann
 
 - **Geführt bestimmen:** Schritt für Schritt durch den Bestimmungsschlüssel (Glanz → Strich → Härte → Spaltbarkeit), mit Praxistipps zu Strichtafel und Ritzprobe, Trefferzahlen vor jeder Antwort, „nicht sicher“ für Grenzfälle und Hinweisen auf Nachbartabellen.
+- **Feinbestimmung:** Ist die Tabelle erreicht, fragt die App weiter nach Form (mit Symbolbildern), Farbe, Glanzart, Gewicht, genauer Härte und Salzsäuretest – jeweils das Merkmal, das die verbliebenen Kandidaten am besten trennt. Zum Schluss stehen die letzten Kandidaten in einer Vergleichstabelle, die unterscheidenden Merkmale sind markiert; ausgeschiedene Einträge lassen sich mit Begründung nachlesen.
 - **Alle Tabellen:** alle 283 Einträge (231 Mineralien) filterbar nach Glanz, Strichfarbe, Mohs-Härte, Spaltbarkeit, Dichte, Glanzart, Kristallsystem und Tabelle, mit Freitextsuche.
 - **Kristallmodelle:** zu jedem Mineral ein aus Kristallklasse und typischer Tracht berechnetes Modell der Idealform – klein in der Liste, aufgeklappt groß und drehbar, mit einblendbaren Drehachsen, Spiegelebenen und Symmetriezentrum. Darstellung umschaltbar zwischen Holzmodell und Lehrbuchzeichnung.
 - **Silikatstrukturen:** bei Silikaten ein Schema der SiO₄-Tetraeder-Verknüpfung (Insel-, Gruppen-, Ring-, Ketten-, Band-, Schicht-, Gerüstsilikat) mit Vergleich aller sieben Klassen.
@@ -31,6 +32,7 @@ Die Tabellen wurden von Hand aus dem gescannten Original übertragen. Stellen mi
 | `quellen/mineral_daten.txt` | die Transkription, Grundlage für alles andere |
 | `quellen/mindat_ids.py` | Zuordnung der deutschen Namen zu mindat-Seiten |
 | `quellen/template.html` | Seitenvorlage (Gestaltung und Logik); die Formtabelle der Kristallmodelle (`KR`) und die Silikatzuordnung (`SIL_ZU`) stehen im Abschnitt „Kristallmodelle und Silikatstrukturen“ |
+| `quellen/merkmale.py` | Merkmalsgruppen für die Feinbestimmung (Farbe, Glanz, Form, Salzsäure), aus den Tabellenangaben abgeleitet und von Hand korrigiert (`KORREKTUR`); die Salzsäurereaktion steht nur bei Calcit, Dolomit und Aragonit in den Tabellen, sonst ist sie nach Lehrbuchwissen ergänzt, Cerussit bleibt ohne Angabe |
 | `quellen/parse.py`, `quellen/build.py` | Skripte zum Neubau |
 
 ## App neu bauen

@@ -1,5 +1,6 @@
 import json, re, csv
 from mindat_ids import M as MINDAT, url as mindat_url
+from merkmale import merkmale
 
 SUB = str.maketrans("0123456789,", "₀₁₂₃₄₅₆₇₈₉,")
 BAR = "\u0304"
@@ -78,6 +79,7 @@ for line in open("mineral_daten.txt", encoding="utf-8"):
         spaltgr=cur["spaltgr"],
     )
     r["mindat"] = mindat_url(name)
+    r["fb"] = merkmale(r)          # Merkmalsgruppen für die Feinbestimmung
     r["mindat_en"] = MINDAT[name][0]
     rows.append(r)
     tables[-1]["n"] += 1
