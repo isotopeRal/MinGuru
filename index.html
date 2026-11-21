@@ -545,14 +545,34 @@ function bindList(el) {
     if (j) { const name = rows[+j.closest(".row").dataset.i].name; reset(); st.q = name; $("q").value = name; setView("tabelle"); return; }
     if (e.target.closest(".detail") || e.target.closest("a")) return;
     const row = e.target.closest(".row"); if (!row) return;
-    const i = +row.dataset.i; st.open.has(i) ? st.open.delete(i) : st.open.add(i); rerender();
+    toggleRow(el, +row.dataset.i, false);
   });
   el.addEventListener("keydown", e => {
     if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("row")) {
-      e.preventDefault(); const i = +e.target.dataset.i; st.open.has(i) ? st.open.delete(i) : st.open.add(i); rerender();
-      const f = el.querySelector(`.row[data-i="${i}"]`); f && f.focus();
+      e.preventDefault(); toggleRow(el, +e.target.dataset.i, true);
     }
   });
+}
+/* Eine Zeile auf- oder zuklappen. Nur diese Zeile wird neu gezeichnet, nicht die ganze Liste,
+   und die Seite wird so nachgeführt, dass die angetippte Zeile an ihrer Stelle bleibt.
+   Safari (iPhone, iPad) hält die Scrollposition sonst nicht fest und springt beim
+   Neuzeichnen langer Listen oft ans Seitenende. */
+function toggleRow(el, i, tastatur) {
+  const alt = el.querySelector(`.row[data-i="${i}"]`);
+  const oben = alt ? alt.getBoundingClientRect().top : null;
+  // Fokus vorher lösen: Safari scrollt sonst, wenn das fokussierte Element ersetzt wird
+  if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+  st.open.has(i) ? st.open.delete(i) : st.open.add(i);
+  [$("list"), $("klist")].forEach(l => {
+    const r = l.querySelector(`.row[data-i="${i}"]`);
+    if (r) r.outerHTML = rowHTML(rows[i]);
+  });
+  const neu = el.querySelector(`.row[data-i="${i}"]`);
+  if (neu && oben != null) {
+    const d = neu.getBoundingClientRect().top - oben;
+    if (Math.abs(d) > 1) window.scrollBy(0, d);
+  }
+  if (neu && tastatur) neu.focus({ preventScroll: true });
 }
 bindList($("list")); bindList($("klist"));
 $("q").addEventListener("input", e => { st.q = e.target.value; update(); });
